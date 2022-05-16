@@ -1,0 +1,12 @@
+{
+    "Id": "SpellPouch",
+    "DisplayName": "SpellPouch",
+    "Author": "Truinto",
+    "Version": "1.0.0",
+    "ManagerVersion": "0.24.0",
+    "Requirements": [],
+    "AssemblyName": "SpellPouch.dll",
+    "HomePage": "https://github.com/Truinto/SpellPouch/releases",
+    "Repository": "https://raw.githubusercontent.com/Truinto/SpellPouch/master/SpellPouch/Settings/Repository.json",
+    "EntryMethod": "Shared.Main.Load"
+}
