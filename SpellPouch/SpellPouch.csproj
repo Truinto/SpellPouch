@@ -94,7 +94,8 @@
   <Import Project="..\..\DarkCodex\CodexShared\CodexShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /i /e /y /f "$(TargetDir)*" "$(ModFolder)\$(TargetName)\"
+    <PostBuildEvent>xcopy /i /e /y /f /d "$(SolutionDir)..\DarkCodex\CodexLib\bin\$(Configuration)\CodexLib.dll" "$(ModFolder)\$(TargetName)\"
+xcopy /i /e /y /f "$(TargetDir)*" "$(ModFolder)\$(TargetName)\"
 
 if "$(Configuration)"=="Release" (
    cd /d "$(ModFolder)\$(TargetName)\"

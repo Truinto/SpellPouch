@@ -2,7 +2,7 @@
     "Id": "SpellPouch",
     "DisplayName": "SpellPouch",
     "Author": "Truinto",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "ManagerVersion": "0.24.0",
     "Requirements": [],
     "AssemblyName": "SpellPouch.dll",

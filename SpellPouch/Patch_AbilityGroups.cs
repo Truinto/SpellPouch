@@ -414,7 +414,7 @@ namespace SpellPouch
             else if (targetMechanic is IMechanicGroup m2) // add to group
             {
                 m2.AddToGroup(sourceMechanic);
-                if (targetParent is MechanicActionBarSlotGroup)
+                if (targetMechanic is MechanicActionBarSlotGroup)
                     Save();
             }
 
