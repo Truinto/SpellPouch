@@ -324,6 +324,25 @@ namespace SpellPouch
             RootVM.SetMechanicSlots(unit);
         }
 
+        //[HarmonyPatch(typeof(ActionBarSlotPCView), "UnityEngine.EventSystems.IDragHandler.OnDrag")]
+        //[HarmonyPostfix]
+        private static void DragSlot2(PointerEventData data)
+        {
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+                return;
+
+            var dragslot = RootPCView?.m_DragSlot?.gameObject;
+            if (dragslot == null || !dragslot.activeSelf)
+                return;
+
+            ActionBarSlotVM targetSlot = data.pointerEnter.GetComponentInParent<ActionBarBaseSlotView>()?.ViewModel;
+            var rect = data.pointerEnter.GetComponentInParent<RectTransform>();
+            bool hit = RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, data.position, data.pressEventCamera, out var localPosition);
+            bool placeRight = localPosition.x >= 0;
+
+            // TODO: highlight left/right placement
+        }
+
         [HarmonyPatch(typeof(ActionBarSlotPCView), "UnityEngine.EventSystems.IEndDragHandler.OnEndDrag")]
         [HarmonyPrefix]
         private static bool DragSlot(PointerEventData eventData, ActionBarSlotPCView __instance)

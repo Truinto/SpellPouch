@@ -65,7 +65,7 @@ Changes will affect all party members equally. Remember to disable 'Unlock Group
 Spell Groups
 -----------
 You can also create Spell Groups. They have a grey border. \
-![example spell group](/resources/spell-group.png) \
+![example spell group](/resources/spell-group.jpg) \
 Spell Groups behave a lot like Ability Groups. But they are unique for each character. 
 You can add any spell you like, as long as it can be cast. Variant spells cannot be added. Pick one of the variants instead. \
 To cast a spell, unfold it and click on any spell. Or you may click the group itself to cast the first available spell. \
