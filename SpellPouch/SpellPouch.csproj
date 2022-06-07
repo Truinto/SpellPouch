@@ -95,11 +95,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /i /e /y /f /d "$(SolutionDir)..\DarkCodex\CodexLib\bin\$(Configuration)\CodexLib.dll" "$(ModFolder)\$(TargetName)\"
-xcopy /i /e /y /f "$(TargetDir)*" "$(ModFolder)\$(TargetName)\"
+xcopy /i /e /y /f /d "$(TargetDir)*" "$(ModFolder)\$(TargetName)\"
 
 if "$(Configuration)"=="Release" (
-   cd /d "$(ModFolder)\$(TargetName)\"
-   "C:\Program Files\7-Zip\7z.exe" u "-x!*.zip" "$(TargetName).zip" @"filelist.txt" &gt;NUL
+   cd /d "$(ModFolder)\"
+   "C:\Program Files\7-Zip\7z.exe" u "-x!*.zip" "$(TargetName)\$(TargetName).zip" @"$(TargetName)\filelist.txt" &gt;NUL
    echo Updated $(TargetName).zip
 )</PostBuildEvent>
   </PropertyGroup>
