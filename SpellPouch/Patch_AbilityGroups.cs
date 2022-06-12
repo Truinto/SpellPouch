@@ -279,18 +279,22 @@ namespace SpellPouch
         [HarmonyPostfix]
         private static void KeepOpen2(ActionBarVM __instance, int __state)
         {
-            if (__state < 0)
-                return;
-
-            foreach (var slot in __instance.Slots)
+            try
             {
-                if (slot.Index == __state && slot.MechanicActionBarSlot is IMechanicGroup)
+                if (__state < 0)
+                    return;
+
+                foreach (var slot in __instance.Slots)
                 {
-                    Main.PrintDebug("reopend OnShowConvertRequest after refresh");
-                    slot.OnShowConvertRequest();
-                    break;
+                    if (slot.Index == __state && slot.MechanicActionBarSlot is IMechanicGroup)
+                    {
+                        Main.PrintDebug("reopend OnShowConvertRequest after refresh");
+                        slot.OnShowConvertRequest();
+                        break;
+                    }
                 }
             }
+            catch (Exception e) { Main.PrintException(e); }
         }
 
         private static void SwapSlot(ActionBarSlotVM slot1, ActionBarSlotVM slot2)
@@ -367,7 +371,7 @@ namespace SpellPouch
              * InGameConsoleView
              * 
              */
-#if DEBUG//VERBOSE
+#if VERBOSE
             try
             {
                 int count = 0;
@@ -391,62 +395,65 @@ namespace SpellPouch
             if (DefGroup.Groups == null)
                 return true;
 
-            // clear drop indicator
-            var dragslot = RootPCView?.m_DragSlot;
-            if (dragslot != null)
+            try
             {
-                dragslot.Bind(null);
-                dragslot.gameObject.SetActive(false);
+                // clear drop indicator
+                var dragslot = RootPCView?.m_DragSlot;
+                if (dragslot != null)
+                {
+                    dragslot.Bind(null);
+                    dragslot.gameObject.SetActive(false);
+                }
+
+                ActionBarSlotVM sourceSlot = __instance.ViewModel;
+                ActionBarSlotVM targetSlot = eventData.pointerEnter?.GetComponentInParent<ActionBarBaseSlotView>()?.ViewModel;
+                IMechanicGroup sourceParent = sourceSlot is ActionBarSlotVMChild vm1 ? vm1.Parent.MechanicActionBarSlot as IMechanicGroup : null;
+                IMechanicGroup targetParent = targetSlot is ActionBarSlotVMChild vm2 ? vm2.Parent.MechanicActionBarSlot as IMechanicGroup : null;
+                MechanicActionBarSlot sourceMechanic = sourceSlot.MechanicActionBarSlot;
+                MechanicActionBarSlot targetMechanic = targetSlot?.MechanicActionBarSlot;
+                var a1 = DefGroup.GetBlueprint(sourceMechanic);
+                var a2 = DefGroup.GetBlueprint(targetMechanic);
+
+                Main.PrintDebug($"DragSlot sourceSlot={sourceSlot.Index} targetSlot={targetSlot?.Index} sourceParent={sourceParent} targetParent={targetParent} sourceMechanic={sourceMechanic} targetMechanic={targetMechanic} a1={a1} a2={a2}");
+
+                if (targetMechanic == null) // remove
+                {
+                    if (sourceMechanic is MechanicActionBarSlotGroup m1) // remove whole group
+                        Helper.ShowMessageBox("Remove group?", onYes: () => RemoveGroup(m1.GetTitle()));
+                    else
+                        sourceParent?.RemoveFromGroup(sourceMechanic); // remove single ability
+                }
+
+                else if (targetParent != null) // add at specific index
+                {
+                    var rect = eventData.pointerEnter.GetComponentInParent<RectTransform>();
+                    bool hit = RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, eventData.position, eventData.pressEventCamera, out var localPosition);
+                    var normalizedPosition = Rect.PointToNormalized(rect.rect, localPosition);
+                    bool placeRight = localPosition.x >= 0;
+                    Main.PrintDebug($"position right={placeRight} hit={hit} local={localPosition} normalized={normalizedPosition} rect={rect?.rect} mouse-x={eventData.position.x}");
+                    targetParent.AddToGroup(sourceMechanic, targetMechanic, placeRight);
+                    if (targetParent is MechanicActionBarSlotGroup)
+                        Save();
+                }
+
+                else if (targetMechanic is IMechanicGroup m2) // add to group
+                {
+                    m2.AddToGroup(sourceMechanic);
+                    if (targetMechanic is MechanicActionBarSlotGroup)
+                        Save();
+                }
+
+                else if (a1 && a2) // add new group
+                {
+                    Helper.ShowInputBox("Create new group: ", onOK: a => AddGroup(a, "", null, a1.AssetGuid.ToString(), a2.AssetGuid.ToString()));
+                }
+
+                else if (DefGroup.IsValidSpellGroup(sourceMechanic) && DefGroup.IsValidSpellGroup(targetMechanic)) // add new spell group
+                {
+                    SetSlot(targetSlot, new MechanicActionBarSlotSpellGroup(targetMechanic.Unit, new List<MechanicActionBarSlot> { sourceMechanic, targetMechanic }));
+                }
             }
-
-            ActionBarSlotVM sourceSlot = __instance.ViewModel;
-            ActionBarSlotVM targetSlot = eventData.pointerEnter?.GetComponentInParent<ActionBarBaseSlotView>()?.ViewModel;
-            IMechanicGroup sourceParent = sourceSlot is ActionBarSlotVMChild vm1 ? vm1.Parent.MechanicActionBarSlot as IMechanicGroup : null;
-            IMechanicGroup targetParent = targetSlot is ActionBarSlotVMChild vm2 ? vm2.Parent.MechanicActionBarSlot as IMechanicGroup : null;
-            MechanicActionBarSlot sourceMechanic = sourceSlot.MechanicActionBarSlot;
-            MechanicActionBarSlot targetMechanic = targetSlot?.MechanicActionBarSlot;
-            var a1 = DefGroup.GetBlueprint(sourceMechanic);
-            var a2 = DefGroup.GetBlueprint(targetMechanic);
-
-            Main.PrintDebug($"DragSlot sourceSlot={sourceSlot.Index} targetSlot={targetSlot?.Index} sourceParent={sourceParent} targetParent={targetParent} sourceMechanic={sourceMechanic} targetMechanic={targetMechanic} a1={a1} a2={a2}");
-
-            if (targetMechanic == null) // remove
-            {
-                if (sourceMechanic is MechanicActionBarSlotGroup m1) // remove whole group
-                    Helper.ShowMessageBox("Remove group?", onYes: () => RemoveGroup(m1.GetTitle()));
-                else
-                    sourceParent?.RemoveFromGroup(sourceMechanic); // remove single ability
-            }
-
-            else if (targetParent != null) // add at specific index
-            {
-                var rect = eventData.pointerEnter.GetComponentInParent<RectTransform>();
-                bool hit = RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, eventData.position, eventData.pressEventCamera, out var localPosition);
-                var normalizedPosition = Rect.PointToNormalized(rect.rect, localPosition);
-                bool placeRight = localPosition.x >= 0;
-                Main.PrintDebug($"position right={placeRight} hit={hit} local={localPosition} normalized={normalizedPosition} rect={rect?.rect} mouse-x={eventData.position.x}");
-                targetParent.AddToGroup(sourceMechanic, targetMechanic, placeRight);
-                if (targetParent is MechanicActionBarSlotGroup)
-                    Save();
-            }
-
-            else if (targetMechanic is IMechanicGroup m2) // add to group
-            {
-                m2.AddToGroup(sourceMechanic);
-                if (targetMechanic is MechanicActionBarSlotGroup)
-                    Save();
-            }
-
-            else if (a1 && a2) // add new group
-            {
-                Helper.ShowInputBox("Create new group: ", onOK: a => AddGroup(a, "", null, a1.AssetGuid.ToString(), a2.AssetGuid.ToString()));
-            }
-
-            else if (DefGroup.IsValidSpellGroup(sourceMechanic) && DefGroup.IsValidSpellGroup(targetMechanic)) // add new spell group
-            {
-                SetSlot(targetSlot, new MechanicActionBarSlotSpellGroup(targetMechanic.Unit, new List<MechanicActionBarSlot> { sourceMechanic, targetMechanic }));
-            }
-
+            catch (Exception e) { Main.PrintException(e); }
             return false;
         }
 
@@ -457,6 +464,10 @@ namespace SpellPouch
             if (__instance.MechanicActionBarSlot is IMechanicGroup)
                 __instance.Icon.Value = __instance.MechanicActionBarSlot.GetIcon();
         }
+
+        [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.UpdateResource))]
+        [HarmonyFinalizer]
+        private static Exception UpdateSlotFinalizer(Exception __exception) => Main.NullFinalizer(__exception);
 
         [HarmonyPatch(typeof(UnitUISettings), nameof(UnitUISettings.GetBadSlotReplacement))]
         [HarmonyPrefix]
@@ -475,18 +486,22 @@ namespace SpellPouch
 
         public void HandleUnitCommandDidAct(UnitCommand command)
         {
-            if (command is UnitUseAbility useAbility)
+            try
             {
-                var unit = command.Executor;
-                if (unit != null && unit.IsPlayerFaction && unit.Brain.IsAutoUseAbility(useAbility.Ability) && unit.UISettings.m_Slots != null)
+                if (command is UnitUseAbility useAbility)
                 {
-                    foreach (var slot in unit.UISettings.m_Slots)
+                    var unit = command.Executor;
+                    if (unit != null && unit.IsPlayerFaction && unit.Brain.IsAutoUseAbility(useAbility.Ability) && unit.UISettings.m_Slots != null)
                     {
-                        if (slot is MechanicActionBarSlotSpellGroup group && group.UpdateAutoUse())
-                            break;
+                        foreach (var slot in unit.UISettings.m_Slots)
+                        {
+                            if (slot is MechanicActionBarSlotSpellGroup group && group.UpdateAutoUse())
+                                break;
+                        }
                     }
                 }
             }
+            catch (Exception e) { Main.PrintException(e); }
         }
 
         #endregion

@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.3]
+- added some exception handling
+
 ## [1.0.2]
 - changed installation path, so files should extract correctly for everybody
 
