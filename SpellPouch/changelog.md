@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.4]
+- fixed exception handling to cause exceptions
+
 ## [1.0.3]
 - added some exception handling
 
