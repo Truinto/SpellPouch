@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1]
+- fixed DefGroup not serializing guids
+
+## [1.1.0]
+- update for 1.4
+
 ## [1.0.4]
 - fixed exception handling to cause exceptions
 

@@ -80,19 +80,19 @@ namespace SpellPouch
                 // ForesterTactician
                 // Judgment
 
-                //Resource.Cache.Ensure();
-                //CollectFromResource("9d9c90a9a1f52d04799294bf91c80a82", "Ki Powers", "", null);
-                //CollectFromResource("7d002c1025fbfe2458f1509bf7a89ce1", "Ki Powers Scaled Fist", "", null);
-                //CollectFromResource("effc3e386331f864e9e06d19dc218b37", "Arcane Pool", "", null);
-                //CollectFromResource("9dedf41d995ff4446a181f143c3db98c", "Lay On Hands", "", null);
-                //CollectFromResource("905722fe39d87474aa6d41bffa327ff3", "Aeon Gaze", "", null);
-                //CollectFromResource("da0fb35828917f344b1cd72c98b70498", "Warpriest Fervor", "", null);
-                //CollectFromResource("d2bae584db4bf4f4f86dd9d15ae56558", "Stunning Fist", "", null);
-                //CollectFromResource("e190ba276831b5c4fa28737e5e49e6a6", "Bardic Performance", "", null);
-                //CollectFromResource("d67ddd98ad019854d926f3d6a4e681c5", "Arcanist Consume Spells", "", null);
-                //CollectFromResource("cac948cbbe79b55459459dd6a8fe44ce", "Arcanist Arcane Reservoir", "", null);
-                //CollectFromResource("1633025edc9d53f4691481b48248edd7", "Alchemist Bombs", "", null);
-                //Helper.Serialize(Groups, path: Path.Combine(Main.ModPath, "DefGroups.json"));
+                CollectFromResource("9d9c90a9a1f52d04799294bf91c80a82", "Ki Powers", "", null);
+                CollectFromResource("7d002c1025fbfe2458f1509bf7a89ce1", "Ki Powers Scaled Fist", "", null);
+                CollectFromResource("effc3e386331f864e9e06d19dc218b37", "Arcane Pool", "", null);
+                CollectFromResource("9dedf41d995ff4446a181f143c3db98c", "Lay On Hands", "", null);
+                CollectFromResource("905722fe39d87474aa6d41bffa327ff3", "Aeon Gaze", "", null);
+                CollectFromResource("da0fb35828917f344b1cd72c98b70498", "Warpriest Fervor", "", null);
+                CollectFromResource("d2bae584db4bf4f4f86dd9d15ae56558", "Stunning Fist", "", null);
+                CollectFromResource("e190ba276831b5c4fa28737e5e49e6a6", "Bardic Performance", "", null);
+                CollectFromResource("d67ddd98ad019854d926f3d6a4e681c5", "Arcanist Consume Spells", "", null);
+                CollectFromResource("cac948cbbe79b55459459dd6a8fe44ce", "Arcanist Arcane Reservoir", "", null);
+                CollectFromResource("1633025edc9d53f4691481b48248edd7", "Alchemist Bombs", "", null);
+                Helper.Serialize(DefGroup.Groups, path: Path.Combine(Main.ModPath, "DefGroups.json"));
+                return;
 
                 DefGroup.Groups = Helper.Deserialize<HashSet<DefGroup>>(path: Path.Combine(Main.ModPath, "DefGroups.json"));
             }
@@ -114,7 +114,25 @@ namespace SpellPouch
 
         public static void CollectFromResource(string guid, string title, string description, string icon)
         {
-            throw new NotImplementedException();
+            var group = new DefGroup(title, description, icon);
+            var guid2 = BlueprintGuid.Parse(guid);
+
+            foreach (var ab in ResourcesLibrary.BlueprintsCache.m_LoadedBlueprints.Where(w =>
+            {
+                if (w.Value.Blueprint is BlueprintScriptableObject bp)
+                {
+                    if (bp.GetComponent<AbilityResourceLogic>()?.m_RequiredResource?.Guid == guid2)
+                        return true;
+                    if (bp.GetComponent<ActivatableAbilityResourceLogic>()?.m_RequiredResource?.Guid == guid2)
+                        return true;
+                }
+                return false;
+            }))
+                group.Guids.Add(ab.Value.Blueprint.AssetGuid);
+            if (DefGroup.Groups == null)
+                DefGroup.Groups = new();
+            DefGroup.Groups.Add(group);
+
             //var group = new DefGroup(title, description, icon);
             //var resource = BlueprintGuid.Parse(guid);
             //foreach (var ab in Resource.Cache.Ability.Where(w => w.GetComponent<AbilityResourceLogic>()?.m_RequiredResource?.Guid == resource)) // !w.HasVariants &&

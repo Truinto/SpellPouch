@@ -50,7 +50,7 @@ namespace Shared
 
         static partial void OnBlueprintsLoaded()
         {
-            using var scope = new Scope(Main.ModPath, Main.logger);
+            using var scope = new Scope(Main.ModPath, Main.logger, Main.harmony, false);
 
             PatchSafe(typeof(Patch_AbilityGroups));
             SubscribeSafe(typeof(Patch_AbilityGroups));
