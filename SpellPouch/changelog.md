@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.2]
+- fixed groups reseting to defaults
+
 ## [1.1.1]
 - fixed DefGroup not serializing guids
 
