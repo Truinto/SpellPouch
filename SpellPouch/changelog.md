@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.3]
+- fixed for 2.0.4j
+
 ## [1.1.2]
 - fixed groups reseting to defaults
 

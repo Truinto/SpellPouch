@@ -1,19 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellPouch", "SpellPouch\SpellPouch.csproj", "{0CCED1B7-458B-47DE-9902-C9B132C042C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellPouch", "SpellPouch\SpellPouch.csproj", "{0CCED1B7-458B-47DE-9902-C9B132C042C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodexLib", "..\DarkCodex\CodexLib\CodexLib.csproj", "{C518E346-DDBD-498A-BEF9-D50FF314AD38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodexLib", "..\DarkCodex\CodexLib\CodexLib.csproj", "{C518E346-DDBD-498A-BEF9-D50FF314AD38}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CodexShared", "..\DarkCodex\CodexShared\CodexShared.shproj", "{D8B84699-BAA2-4037-A5EF-C41119C3988C}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\DarkCodex\CodexShared\CodexShared.projitems*{0cced1b7-458b-47de-9902-c9b132c042c3}*SharedItemsImports = 4
-		..\DarkCodex\CodexShared\CodexShared.projitems*{d8b84699-baa2-4037-a5ef-c41119c3988c}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -33,5 +29,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D0411F39-571F-46D5-BAB9-069B59328C5F}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\DarkCodex\CodexShared\CodexShared.projitems*{0cced1b7-458b-47de-9902-c9b132c042c3}*SharedItemsImports = 5
+		..\DarkCodex\CodexShared\CodexShared.projitems*{d8b84699-baa2-4037-a5ef-c41119c3988c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

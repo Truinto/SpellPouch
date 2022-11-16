@@ -246,7 +246,7 @@ namespace SpellPouch
         }
 
         [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.OnShowConvertRequest))]
-        [HarmonyPriority(Priority.VeryHigh)]
+        [HarmonyPriority(Priority.First)]
         [HarmonyPrefix]
         private static bool OnShowConvert(ActionBarSlotVM __instance)
         {
