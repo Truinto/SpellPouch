@@ -10,7 +10,7 @@ namespace SpellPouch
 {
     public class Settings : BaseSettings<Settings>
     {
-        public Settings() => version = 1;
+        public Settings() => Version = 1;
 
         [JsonProperty]
         public bool verbose = true;

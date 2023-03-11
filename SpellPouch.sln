@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellPouch", "SpellPouch\Sp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodexLib", "..\DarkCodex\CodexLib\CodexLib.csproj", "{C518E346-DDBD-498A-BEF9-D50FF314AD38}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CodexShared", "..\DarkCodex\CodexShared\CodexShared.shproj", "{D8B84699-BAA2-4037-A5EF-C41119C3988C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,9 +27,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D0411F39-571F-46D5-BAB9-069B59328C5F}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\DarkCodex\CodexShared\CodexShared.projitems*{0cced1b7-458b-47de-9902-c9b132c042c3}*SharedItemsImports = 5
-		..\DarkCodex\CodexShared\CodexShared.projitems*{d8b84699-baa2-4037-a5ef-c41119c3988c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

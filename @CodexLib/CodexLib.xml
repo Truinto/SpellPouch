@@ -1,0 +1,2052 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <assembly>
+        <name>CodexLib</name>
+    </assembly>
+    <members>
+        <member name="T:CodexLib.BpCache">
+            <summary>
+            Fast blueprint cache for specified types. Preloads from base game guids. Also watches for manual additions from mods.
+            </summary>
+        </member>
+        <member name="F:CodexLib.BpCache.DefaultTypes">
+            <summary>
+            Default types to export and cache.
+            </summary>
+        </member>
+        <member name="P:CodexLib.BpCache.IsLoaded">
+            <summary>
+            True if LoadResources was called before, otherwise false.
+            </summary>
+        </member>
+        <member name="M:CodexLib.BpCache.Get(System.Type)">
+            <summary>
+            Gets read-only collection of given type or empty collection.
+            </summary>
+            <param name="type">Type of blueprint</param>
+        </member>
+        <member name="M:CodexLib.BpCache.Get``1">
+            <summary>
+            Gets read-only collection of given type or empty collection.
+            </summary>
+            <typeparam name="T">Type of blueprint</typeparam>
+        </member>
+        <member name="M:CodexLib.BpCache.ExportResources(System.String,System.Type[])">
+            <summary>
+            Filters base game blueprints and exports guid into file. Can be embedded into 'CodexLib.Resources.Blueprints.bin' for loading.
+            </summary>
+            <param name="path">File path to save to</param>
+            <param name="types">Types of blueprints to filter for</param>
+        </member>
+        <member name="M:CodexLib.BpCache.RegisterType(System.Type)">
+            <summary>
+            Add a new type to be recorded. If a mod adds a blueprint of that type, it's added to the cache.
+            </summary>
+        </member>
+        <member name="M:CodexLib.BpCache.LoadResources(System.IO.Stream,System.Boolean)">
+            <summary>
+            Load blueprints from stream. Format must be as ExportResources().<br />
+            Tries to load embedded CodexLib.Resources.Blueprints.bin, if null.
+            </summary>
+        </member>
+        <member name="M:CodexLib.BpCache.AddResource(Kingmaker.Blueprints.SimpleBlueprint)">
+            <summary>
+            Manual adding blueprint to cache. Should not be necessary as 'BlueprintsCache.AddCachedBlueprint' also adds this.
+            </summary>
+        </member>
+        <member name="T:CodexLib.ActionBarConvertedVMAny">
+            <summary>
+            Overwrites logic to use any MechanicActionBarSlot.
+            </summary>
+        </member>
+        <member name="M:CodexLib.ActionBarConvertedVMAny.#ctor(Kingmaker.UI.MVVM._VM.ActionBar.ActionBarSlotVM,System.Collections.Generic.List{Kingmaker.UI.UnitSettings.MechanicActionBarSlot},System.Action)">
+            <inheritdoc cref="T:CodexLib.ActionBarConvertedVMAny" />
+        </member>
+        <member name="T:CodexLib.ActionBarSlotVMChild">
+            <summary>
+            Remembers parent ActionBarSlotVM of converted slots.
+            </summary>
+        </member>
+        <member name="F:CodexLib.ActionBarSlotVMChild.Parent">
+            <summary>Parent slot that has this open in a convert box.</summary>
+        </member>
+        <member name="M:CodexLib.ActionBarSlotVMChild.#ctor(Kingmaker.UI.MVVM._VM.ActionBar.ActionBarSlotVM,Kingmaker.UI.UnitSettings.MechanicActionBarSlot,System.Int32,System.Int32)">
+            <inheritdoc cref="T:CodexLib.ActionBarSlotVMChild" />
+        </member>
+        <member name="M:CodexLib.ActionBarSlotVMChild.DisposeImplementation">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.ActionBarSlotVMChild.OnMainClick">
+            <summary>
+            Updates icon and border for <see cref="T:CodexLib.MechanicActionBarSlotVariantSelection" />.
+            </summary>
+        </member>
+        <member name="T:CodexLib.AmbigiousCollection`1">
+            <summary>
+            Read-only wrapper for any type of IList. Casts items. Throws if cast not possible.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.#ctor(System.Collections.IList)">
+            <inheritdoc cref="T:CodexLib.AmbigiousCollection`1" />
+        </member>
+        <member name="P:CodexLib.AmbigiousCollection`1.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="P:CodexLib.AmbigiousCollection`1.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:CodexLib.AmbigiousCollection`1.IsReadOnly">
+            <inheritdoc />
+        </member>
+        <member name="P:CodexLib.AmbigiousCollection`1.IsFixedSize">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Add(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Add(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Clear">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Contains(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Contains(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.CopyTo(System.Array,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.CopyTo(`0[],System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.IndexOf(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.IndexOf(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Insert(System.Int32,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Insert(System.Int32,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Remove(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Remove(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.RemoveAt(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:CodexLib.AmbigiousCollection`1.Enumerator">
+            <inheritdoc />
+        </member>
+        <member name="P:CodexLib.AmbigiousCollection`1.Enumerator.Current">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Enumerator.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AmbigiousCollection`1.Enumerator.MoveNext">
+            <inheritdoc />
+        </member>
+        <member name="T:CodexLib.AnyRef">
+            <summary>
+            Wrapper class that combines common references into one. Will implicitly cast into most types. Usually does not throw, but may return null.
+            </summary>
+        </member>
+        <member name="F:CodexLib.AnyRef.Actions">
+            <summary>List of delayed actions to execute after blueprint is generated.</summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.#ctor">
+            <inheritdoc cref="T:CodexLib.AnyRef" />
+        </member>
+        <member name="M:CodexLib.AnyRef.#ctor(System.Action{Kingmaker.Blueprints.BlueprintScriptableObject})">
+            <inheritdoc cref="T:CodexLib.AnyRef" />
+        </member>
+        <member name="P:CodexLib.AnyRef.Value">
+            <summary>
+            Property to access <see cref="M:CodexLib.AnyRef.Get" /> and <see cref="M:CodexLib.AnyRef.Set(Kingmaker.Blueprints.SimpleBlueprint)" /></summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.AddDelayedPatch(System.Action{Kingmaker.Blueprints.BlueprintScriptableObject})">
+            <summary>
+            Add a delayed action. Will execute immedately if blueprint is already loaded. Otherwise will wait.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.Set(Kingmaker.Blueprints.SimpleBlueprint)">
+            <summary>
+            Sets blueprint to reference. Will throw, if guid mismatch. Runs delayed actions, then clears them.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.Get">
+            <summary>
+            Returns blueprint.
+            </summary>
+            <remarks>
+            This returns <see cref="T:Kingmaker.Blueprints.BlueprintScriptableObject" /> instead of <see cref="T:Kingmaker.Blueprints.SimpleBlueprint" />, because almost all inherit the former. This allows access to Components without cast.<br />
+            If the blueprint does not inherit it, this returns null. In that case use Get&lt;SimpleBlueprint&gt;().
+            </remarks>
+        </member>
+        <member name="M:CodexLib.AnyRef.Get``1">
+            <summary>
+            Returns blueprint. If the blueprint isn't <typeparamref name="T" /> or the reference is empty, then an error is printed and null returned.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.ToRef``1">
+            <summary>
+            Converts to a BlueprintReference of <typeparamref name="T" />. Does not validate.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.Is(Kingmaker.Blueprints.BlueprintReferenceBase)">
+            <inheritdoc cref="M:CodexLib.AnyRef.Equals(System.Object)" />
+        </member>
+        <member name="M:CodexLib.AnyRef.Is(Kingmaker.Blueprints.SimpleBlueprint)">
+            <inheritdoc cref="M:CodexLib.AnyRef.Equals(System.Object)" />
+        </member>
+        <member name="M:CodexLib.AnyRef.Is(Kingmaker.Blueprints.BlueprintGuid)">
+            <inheritdoc cref="M:CodexLib.AnyRef.Equals(System.Object)" />
+        </member>
+        <member name="M:CodexLib.AnyRef.Is(System.String)">
+            <inheritdoc cref="M:CodexLib.AnyRef.Equals(System.Object)" />
+        </member>
+        <member name="M:CodexLib.AnyRef.Get``1(CodexLib.AnyRef)">
+            <inheritdoc cref="M:CodexLib.AnyRef.Get``1" />
+        </member>
+        <member name="M:CodexLib.AnyRef.ToRef``1(CodexLib.AnyRef)">
+            <inheritdoc cref="M:CodexLib.AnyRef.ToRef``1" />
+        </member>
+        <member name="M:CodexLib.AnyRef.ToAny(System.Object)">
+            <summary>
+            Converts to AnyRef. <paramref name="obj" /> can be any blueprint, blueprint reference type, or guid string.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AnyRef.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CodexLib.AnyRef.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:CodexLib.CountableFlagArray">
+            <summary>
+            List of enums with a counter of retains. Count is tracked individually by type and value.<br />
+            E.g. SpellSchool.Conjuration (0b10) and SpellSchool.Divination (0b11) do not overlap.<br />
+            All values are boxed, because they are cast into <see cref="T:System.Enum" />.
+            </summary>
+        </member>
+        <member name="M:CodexLib.CountableFlagArray.Retain(System.Enum)">
+            <summary>
+            Increases count for a specific enum value.
+            </summary>
+        </member>
+        <member name="M:CodexLib.CountableFlagArray.Release(System.Enum)">
+            <summary>
+            Decreases count for a specific enum value.
+            </summary>
+        </member>
+        <member name="M:CodexLib.CountableFlagArray.ReleaseAll(System.Enum)">
+            <summary>
+            Remove a specific enum value. Same as setting count to zero.
+            </summary>
+        </member>
+        <member name="M:CodexLib.CountableFlagArray.HasFlag(System.Enum)">
+            <summary>
+            True if enum value count is one or more. Otherwise false.
+            </summary>
+        </member>
+        <member name="M:CodexLib.CountableFlagArray.IsEmpty">
+            <summary>
+            True if no values are saved in this instance.
+            </summary>
+        </member>
+        <member name="P:CodexLib.CountableFlagArray.Item(System.Enum)">
+            <summary>
+            Accessor to count of a specific enum value.
+            </summary>
+        </member>
+        <member name="T:CodexLib.DefGroup">
+            <summary>
+            Container for Ability Group
+            </summary>
+        </member>
+        <member name="T:CodexLib.BlueprintGuidListConverter">
+            <summary>
+            This really shouldn't be necessary. But BlueprintGuidConverter does not deserialize since 1.4.
+            </summary>
+        </member>
+        <member name="T:CodexLib.DiceValue">
+            <summary>
+            A simplified ContextDiceValue without context.
+            </summary>
+        </member>
+        <member name="T:CodexLib.FlagArray">
+            <summary>
+            Experiment for storing flags. Abandoned in favor of CountableFlagArray.
+            </summary>
+        </member>
+        <member name="M:CodexLib.KineticistTree.GetComposites(CodexLib.KineticistTree.Element,CodexLib.KineticistTree.Element)">
+            <summary>Returns composite of two elements or no elements, if no composite matches.</summary>
+        </member>
+        <member name="M:CodexLib.KineticistTree.GetBlasts(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>Only returns non null values.</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.DefaultAbility">
+            <summary>Special case: Feature is empty</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Element.Selection">
+            <summary>can be null</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Element.Progession">
+            <summary>only on basics</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Element.Parent1">
+            <summary>only on composites</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Element.Parent2">
+            <summary>only on composites other than metal and blueFlame</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Focus.Element2">
+            <summary>can be null (earth, fire)</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Infusion.Buff">
+            <summary>can be null (only exists on substance infusions)</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Infusion.Variants">
+            <summary>can be null (only exists on form infusions)</summary>
+        </member>
+        <member name="F:CodexLib.KineticistTree.Infusion.Activator">
+            <summary>can be null (BlueprintActivatable, BlueprintAbility, BlueprintBuff, BlueprintFeature)</summary>
+        </member>
+        <member name="T:CodexLib.MechanicActionBarSlotGroup">
+            <summary>
+            Logic for Ability Group
+            </summary>
+        </member>
+        <member name="T:CodexLib.MechanicActionBarSlotPlaceholder">
+            <summary>
+            Logic to display not available ability
+            </summary>
+        </member>
+        <member name="T:CodexLib.MechanicActionBarSlotSpellGroup">
+            <summary>
+            Logic for Spell Group
+            </summary>
+        </member>
+        <member name="M:CodexLib.MechanicActionBarSlotSpellGroup.UpdateAutoUse">
+            <returns>true if AutoUse is managed by this group</returns>
+        </member>
+        <member name="T:CodexLib.MetamagicExt">
+            <summary>
+            WIP; suspect to change
+            </summary>
+            
+            RuleCollectMetamagic, AddMetamagicFeat
+            RuleApplyMetamagic
+            MetamagicData
+            MetamagicBuilder 
+            SpellBookMetamagicMixer?
+            UIUtilityTexts .GetMetamagicList .GetMetamagicName
+            Game.Instance.BlueprintRoot.LocalizedTexts.MetamagicNames
+            
+        </member>
+        <member name="T:CodexLib.SpellSlotLevel">
+            <summary>
+            Container to compare Spell Slots. Equal when itself, converted from itself, or same level of the same spontaneous spellbook.
+            </summary>
+        </member>
+        <member name="T:CodexLib.AbilityDeliverChainAttack">
+            <summary>
+            Ability logic for chaining spells (Chain Lightning)
+            </summary>
+        </member>
+        <member name="T:CodexLib.AbilityDeliverTeleportTrample">
+            <summary>
+            Ability logic to teleport caster to point and return targets inbetween plus reach
+            </summary>
+        </member>
+        <member name="T:CodexLib.AbilityRequirementHasBuffTimed">
+            <summary>
+            Only the first buff found will check against the condition.
+            </summary>
+        </member>
+        <member name="T:CodexLib.ActivatableVariants">
+            <summary>
+            Component to add foldable to any BlueprintAbility or BlueprintActivatableAbility. Takes priority over existing conversions, if any.
+            </summary>
+        </member>
+        <member name="M:CodexLib.ActivatableVariants.#ctor(CodexLib.AnyRef[])">
+            <param name="facts">type: <b>BlueprintUnitFact</b></param>
+        </member>
+        <member name="M:CodexLib.ActivatableVariants.OnEventAboutToTrigger">
+            <summary>Example</summary>
+        </member>
+        <member name="T:CodexLib.AddCasterLevelLimit">
+            <summary>
+            increase caster level, up to HD limit
+            </summary>
+        </member>
+        <member name="T:CodexLib.AddDamageResistancePhysicalImproved">
+            <summary>
+            Improves existing Damage reduction
+            </summary>
+        </member>
+        <member name="T:CodexLib.AddDuelistWeapon">
+            <summary>
+            WeaponCategory counts as duelist weapon (one-handed piercing weapon).
+            </summary>
+        </member>
+        <member name="T:CodexLib.AddFactOnlyParty">
+            <summary>
+            Add fact, but only to playable characters.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AddFactOnlyParty.#ctor(CodexLib.AnyRef,System.Int32,Kingmaker.Blueprints.Classes.Selection.FeatureParam)">
+            <summary>
+            Add fact, but only to playable characters.
+            </summary>
+            <param name="feature">type: <b>BlueprintUnitFact</b></param>
+            <param name="level">Minimum level the character must have.</param>
+            <param name="parameter">For parameterized features.</param>
+        </member>
+        <member name="T:CodexLib.AddFactsSafe">
+            <summary>
+            Like AddFacts, but will disable Activatables before level up.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AddFactsSafe.#ctor(CodexLib.AnyRef[])">
+            <param name="facts">type: <b>BlueprintUnitFact</b> but not BlueprintParametrizedFeature, BlueprintFeatureSelection</param>
+        </member>
+        <member name="M:CodexLib.AddFeatureOnApplyPrerequisite.#ctor(System.Int32,CodexLib.AnyRef,CodexLib.AnyRef[])">
+            <summary>
+            Same as <see cref="T:Kingmaker.Designers.Mechanics.Facts.AddFeatureOnApply" />, but prerequisites are required.
+            </summary>
+            <param name="amount">Count of prerequisites that must be fulfilled.</param>
+            <param name="prerequisites">type: <b>BlueprintFeatureReference</b></param>
+            <param name="feature">type: <b>BlueprintFeatureReference</b></param>
+        </member>
+        <member name="T:CodexLib.AddFeatureSelection">
+            <summary>
+            Adds another feature when gaining a feature. Can be a BlueprintFeatureSelection, in which case a new tab is generated.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AddTemporaryWeapon.#ctor(CodexLib.AnyRef)">
+            <param name="weapon">type: <b>BlueprintItemWeapon</b></param>
+        </member>
+        <member name="T:CodexLib.AddUndeadCompanion">
+            <summary>
+            TODO: AddUndeadCompanion
+            fix: need to save data in UnitPart instead of RuntimeData? or new interface?
+            </summary>
+        </member>
+        <member name="F:CodexLib.BleedBuff.BuffBleed">
+            <summary>type: <b>BlueprintBuff</b></summary>
+        </member>
+        <member name="M:CodexLib.ContextActionUndoAction.#ctor(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType,System.Single,System.Boolean)">
+            <summary>
+            Restore action time. Cooldown is usually 6 seconds, except for CommandType.Move where 3 seconds is one move action and 6 seconds are 2 move actions.
+            </summary>
+            <param name="command" />
+            <param name="amount">Time to refund. Negative values will steal time instead.</param>
+            <param name="forceMove" />
+        </member>
+        <member name="T:CodexLib.ConvertSpellSlots">
+            <summary>
+            Consumes spell slots in place of item charges.
+            </summary>
+        </member>
+        <member name="T:CodexLib.ElementalBarrage">
+            <summary>
+            Unused.
+            </summary>
+        </member>
+        <member name="T:CodexLib.EnergyChannelApplyEffect">
+            <summary>
+            Logic for Energy Channel.
+            </summary>
+        </member>
+        <member name="M:CodexLib.EnergyChannelApplyEffect.#ctor(CodexLib.AnyRef,Kingmaker.Enums.Damage.DamageEnergyType)">
+            <summary>
+            Logic for Energy Channel.
+            </summary>
+            <param name="buff">type: <b>BlueprintBuff</b></param>
+            <param name="element">Damage type</param>
+        </member>
+        <member name="T:CodexLib.FlameBladeLogic">
+            <summary>
+            Logic for Flame Blade, Divine Trident, Produce Flame, and any other spell that grants a magical touch weapon.
+            </summary>
+        </member>
+        <member name="M:CodexLib.FlameBladeLogic.#ctor(CodexLib.AnyRef,Kingmaker.UnitLogic.Mechanics.ContextValue,System.Int32,System.Int32)">
+            <summary>
+            Logic for Flame Blade, Divine Trident, Produce Flame, and any other spell that grants a magical touch weapon.
+            </summary>
+            <param name="flameBladeDervish">type: <b>BlueprintUnitFact</b></param>
+            <param name="drReduction">Amount of DR ignored, if creature has flameBladeDervish.</param>
+            <param name="step">Bonus damage per caster level.</param>
+            <param name="max">Maximal bonus damage.</param>
+        </member>
+        <member name="T:CodexLib.IncreaseResourceAmountPlus">
+            <summary>
+            Grants extra charges for each Fact a creature has.
+            </summary>
+        </member>
+        <member name="M:CodexLib.IncreaseResourceAmountPlus.#ctor(CodexLib.AnyRef,System.Int32,CodexLib.AnyRef[])">
+            <summary>
+            Grants extra charges for each Fact a creature has.
+            </summary>
+            <param name="resource">type: <b>BlueprintAbilityResource</b></param>
+            <param name="multiplier">Extra resources per matching fact.</param>
+            <param name="increasingFacts">type: <b>BlueprintUnitFact</b></param>
+        </member>
+        <member name="T:CodexLib.ManeuverBonusHasFact">
+            <summary>
+            Grants bonus to a combat maneuver while owner has Fact.
+            </summary>
+        </member>
+        <member name="M:CodexLib.ManeuverBonusHasFact.#ctor(CodexLib.AnyRef,System.Int32,Kingmaker.RuleSystem.Rules.CombatManeuver,Kingmaker.Enums.ModifierDescriptor)">
+            <summary>
+            Grants bonus to a combat maneuver while owner has Fact.
+            </summary>
+            <param name="feature">type: <b>BlueprintUnitFact</b></param>
+            <param name="bonus">Maneuver bonus amount.</param>
+            <param name="type">Type of combat maneuver.</param>
+            <param name="descriptor">ModifierDescriptor of maneuver bonus.</param>
+        </member>
+        <member name="T:CodexLib.OverrideResourceLogic">
+            <summary>
+            Replace ResourceLogic of specific abilities.
+            </summary>
+        </member>
+        <member name="M:CodexLib.OverrideResourceLogic.#ctor(Kingmaker.UnitLogic.Abilities.Components.Base.IAbilityResourceLogic,CodexLib.AnyRef[])">
+            <summary>
+            Replace ResourceLogic of specific abilities.
+            </summary>
+            <param name="resourceLogic">Resource logic to take precedence.</param>
+            <param name="spells">type: <b>BlueprintAbility</b></param>
+        </member>
+        <member name="T:CodexLib.AbilityResourceLogicCooldown">
+            <summary>
+            Resource-free use of ability, if not on cooldown.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AbilityResourceLogicCooldown.#ctor(CodexLib.AnyRef,System.Int32,System.Boolean)">
+            <summary>
+            Resource-free use of ability, if not on cooldown.
+            </summary>
+            <param name="resource">type: <b>BlueprintAbilityResource</b></param>
+            <param name="cooldown">Cooldown in rounds.</param>
+            <param name="isSpend">If false, all uses are free without cooldown.</param>
+        </member>
+        <member name="T:CodexLib.PanacheDodge">
+            <summary>
+            Runs after an attack already hit. Will check if the bonus would prevent it and change the result post factum.
+            </summary>
+        </member>
+        <member name="T:CodexLib.PartCooldown">
+            <summary>
+            Storage for ability specific cooldowns. Is not saved in save files. This is only used in combat, where you cannot save.
+            </summary>
+        </member>
+        <member name="T:CodexLib.PartCustomData">
+            <summary>
+            EntityPart to store any kind of enum value.
+            </summary>
+        </member>
+        <member name="P:CodexLib.PartCustomData.Flags">
+            <inheritdoc cref="T:CodexLib.CountableFlagArray" />
+        </member>
+        <member name="M:CodexLib.PartCustomData.IsEmpty">
+            <inheritdoc cref="M:CodexLib.CountableFlagArray.IsEmpty" />
+        </member>
+        <member name="T:CodexLib.PartExtensions">
+            <summary>
+            Extension methods to work with <see cref="T:CodexLib.PartCustomData" />.
+            </summary>
+        </member>
+        <member name="M:CodexLib.PartExtensions.ClearData(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Removes all instances of <see cref="T:CodexLib.PartCustomData" />.
+            </summary>
+        </member>
+        <member name="M:CodexLib.PartExtensions.Retain(Kingmaker.EntitySystem.Entities.UnitEntityData,System.Enum)">
+            <summary>
+            Adds <see cref="T:CodexLib.PartCustomData" />, if necessary. Increase give enum count by one.
+            </summary>
+        </member>
+        <member name="M:CodexLib.PartExtensions.Release(Kingmaker.EntitySystem.Entities.UnitEntityData,System.Enum)">
+            <summary>
+            Decreases enum count by one. If <see cref="T:CodexLib.PartCustomData" /> is empty, it will be removed.
+            </summary>
+        </member>
+        <member name="M:CodexLib.PartExtensions.HasFlag(Kingmaker.EntitySystem.Entities.UnitEntityData,System.Enum)">
+            <summary>
+            Checks if given enum value is one or more.
+            </summary>
+        </member>
+        <member name="F:CodexLib.PoisonEnchantment.Enchantment">
+            <summary>type: <b>BlueprintWeaponEnchantment</b></summary>
+        </member>
+        <member name="T:CodexLib.PrerequisiteKnowsSpell">
+            <summary>
+            Check spell is known in any spellbook.
+            </summary>
+        </member>
+        <member name="F:CodexLib.PrerequisiteKnowsSpell.Spell">
+            <summary>type: <b>BlueprintAbility</b></summary>
+        </member>
+        <member name="M:CodexLib.PrerequisiteKnowsSpell.#ctor(CodexLib.AnyRef,System.Boolean)">
+            <inheritdoc cref="T:CodexLib.PrerequisiteKnowsSpell" />
+            <param name="spell">type: <b>BlueprintAbility</b></param>
+            <param name="any">Prerequisite.GroupType.Any or .All</param>
+        </member>
+        <member name="M:CodexLib.PrerequisiteKnowsSpell.CheckInternal(Kingmaker.UnitLogic.Class.LevelUp.FeatureSelectionState,Kingmaker.UnitLogic.UnitDescriptor,Kingmaker.UnitLogic.Class.LevelUp.LevelUpState)">
+            <inheritdoc cref="T:CodexLib.PrerequisiteKnowsSpell" />
+        </member>
+        <member name="M:CodexLib.PrerequisiteKnowsSpell.GetUITextInternal(Kingmaker.UnitLogic.UnitDescriptor)">
+            <summary>
+            UI text: "Able to cast {spell}"
+            </summary>
+        </member>
+        <member name="F:CodexLib.PrerequisiteKnowsSpell.Text">
+            <summary>UI text: "Able to cast "</summary>
+        </member>
+        <member name="T:CodexLib.ReduceDamageResistance">
+            <summary>
+            Owner ignores specified amount of DR.
+            </summary>
+        </member>
+        <member name="M:CodexLib.RemoveFeatureOnApplyToPet.#ctor(CodexLib.AnyRef)">
+            <param name="feature">type: <b>BlueprintUnitFact</b></param>
+        </member>
+        <member name="T:CodexLib.SpellPerfection">
+            <summary>
+            Solution 1: Check every fact and condition of all feats that are doubled.<br />
+            Solution 2: Change the modifier to "Feat", then apply modifiers of type "Feat" in result of OnEventDidTrigger a second time. Only works for RuleCalculateAbilityParams, since other rules have immediate effects.<br />
+            Solution 3: Change the modifier to "Feat". Enforce this component comes last and double "Feat" modifier in OnEventAboutToTrigger.<br /><br />
+            Uses solution 3.
+            </summary>
+        </member>
+        <member name="T:CodexLib.UnitConditionExceptionsFromBuff">
+            <summary>Don't apply condition, if its source is in Exceptions.</summary>
+        </member>
+        <member name="T:CodexLib.UnitPartModifierBonus">
+            <summary>Unfinished; use IncreaseModifierBonus instead.</summary>
+        </member>
+        <member name="T:CodexLib.AbilityEffectStickyTouchPersist">
+            <summary>
+            Multi touch attacks. E.g. Chill Touch.
+            </summary>
+        </member>
+        <member name="M:CodexLib.AbilityEffectStickyTouchPersist.#ctor(CodexLib.AnyRef,Kingmaker.UnitLogic.Mechanics.ContextValue)">
+            <summary>
+            Multi touch attacks. E.g. Chill Touch.
+            </summary>
+            <param name="blueprintAbility">type: <b>BlueprintAbility</b></param>
+            <param name="count">Count of uses before effect wears off.</param>
+        </member>
+        <member name="T:CodexLib.VariantSelectionApplyEffect">
+            <summary>
+            Mimic properties of selected VariantSelection:<br />
+            - ability restriction (only AbilityResourceLogic)<br />
+            - ContextRankConfig, ContextCalculateSharedValue, ContextAbilityParamsCalculator<br />
+            - AbilityApplyEffect
+            </summary>
+        </member>
+        <member name="T:CodexLib.Const">
+            <summary>
+            Collection of const values. Mostly custom Enums or key strings.
+            </summary>
+        </member>
+        <member name="T:CodexLib.ActivatableVariantsBuffExample">
+            <summary>
+            This is an example on how to get the variant data from a buff applied from activatable ability.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Examples.OnCastDoX">
+            <summary>
+            Example: Useful for custom ability logic
+            </summary>
+        </member>
+        <member name="T:CodexLib.Helper">
+            <summary>
+            Extensions for Blueprint handling and other conveniences.
+            </summary>
+            <remarks>
+            BlueprintComponent has a field OwnerBlueprint. When components are shared between blueprints, these may cause weird bugs.
+            </remarks>
+        </member>
+        <member name="M:CodexLib.Helper.GetFullName(System.Type)">
+            <summary>
+            Returns string sufficient for <b>Type.GetType(string)</b>, without version, culture, or token.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetStat(Kingmaker.EntitySystem.Entities.UnitEntityData,Kingmaker.EntitySystem.Stats.StatType[])">
+            <summary>
+            Returns max stat value or null.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.Check(HarmonyLib.PatchClassProcessor)">
+            <summary>
+            Prints possible patching conflicts.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.IsPatched(System.Type)">
+            <summary>
+            Only works if all harmony attributes are on the class. Does not support bulk patches.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.Append``1(``0[],``0[])">
+            <summary>Appends objects on array.</summary>
+        </member>
+        <member name="M:CodexLib.Helper.AppendAndReplace``1(``0[]@,``0[])">
+            <summary>Appends objects on array and overwrites the original.</summary>
+        </member>
+        <member name="M:CodexLib.Helper.Ensure``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1@)">
+            <summary>
+            Get dictionary value by key and create new value with standard constructor, if it did not exist.<br />
+            Returns true, if new value was created.
+            </summary>
+            <remarks>
+            Remember: If you set value to a new instance, it won't be stored in the dictionary. Use the overload with 'getter' instead.
+            </remarks>
+        </member>
+        <member name="M:CodexLib.Helper.Ensure``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1@,System.Type)">
+            <summary>
+            Get dictionary value by key and create new value with standard constructor of given type, if it did not exist.<br />
+            Returns true, if new value was created.
+            </summary>
+            <remarks>
+            Remember: If you set value to a new instance, it won't be stored in the dictionary. Use the overload with 'getter' instead.
+            </remarks>
+        </member>
+        <member name="M:CodexLib.Helper.Ensure``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1@,System.Func{``1})">
+            <summary>
+            Get dictionary value by key and create new value with given function, if it did not exist.<br />
+            Returns true, if new value was created.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetList">
+            <summary>
+            Gets a static list object. Do not save reference.
+            Call <b>Flush&lt;T&gt;()</b> to receive output.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.Flush``1">
+            <summary>
+            Use when finished with <b>GetList()</b></summary>
+        </member>
+        <member name="M:CodexLib.Helper.PrintDebug(System.String)">
+            <summary>Only prints message, if compiled on DEBUG.</summary>
+        </member>
+        <member name="F:CodexLib.Helper._SetStackTrace">
+            <summary>Source: https://stackoverflow.com/a/63685720</summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateString(Kingmaker.Localization.LocalizedString,System.String)">
+            <summary>
+            Overwrite existing LocalizedString with new value.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.TrySubstring(System.String,System.Char,System.Int32,System.Boolean)">
+            <summary>Returns substring. Always excludes char 'c'. Returns null, if index is out of range or char not found.</summary>
+            <param name="str">source string</param>
+            <param name="c">char to search for</param>
+            <param name="start">start index; negative number search last index instead</param>
+            <param name="tail">get tail instead of head</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetIInitiator``1(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get components that are subscribed for a unit.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetITarget``1(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get components that are subscribed for a unit.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetIGlobal``1(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get components that are subscribed.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetISubscribers``1(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get components that are subscribed for a unit. Slow.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetISubscribers``2(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get components that are subscribed for a unit.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetISubscriber``2(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get last component that is subscribed for a unit.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataExt``1(Kingmaker.EntitySystem.EntityFactComponent)">
+            <summary>
+            Get runtime data of <typeparamref name="TData" /> from a specific component or null, if no match found.
+            </summary>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="component">Component to get runtime data from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataExt``1(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get runtime data of <typeparamref name="TData" /> from a specific fact or null, if no match found.<br />
+            Only the first instance is returned, if the data type exists multiple times.
+            </summary>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="fact">Fact to get runtime data from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataAllExt``1(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get all runtime data of <typeparamref name="TData" /> from a specific fact.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="fact">Fact to get runtime data from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataAllExt``1(Kingmaker.EntitySystem.Entities.UnitEntityData,CodexLib.AnyRef)">
+            <summary>
+            Get all runtime data of <typeparamref name="TData" /> from all of a unit's features. Optionally filtered for a specific blueprint.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="unit">Unit</param>
+            <param name="blueprintFeature">type: BlueprintFeature</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataExt``2(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get runtime data of <typeparamref name="TData" /> from a specific fact or null, if no match found.<br />
+            Only the first instance is returned, if the data type exists multiple times.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="fact">Fact to get runtime data from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataAllExt``2(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get all runtime data of <typeparamref name="TData" /> from a specific fact.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="fact">Fact to get runtime data from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetDataAllExt``2(Kingmaker.EntitySystem.Entities.UnitEntityData,CodexLib.AnyRef)">
+            <summary>
+            Get all runtime data of <typeparamref name="TData" /> from all of a unit's features. Optionally filtered for a specific blueprint.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <typeparam name="TData">Runtime data type to be returned.</typeparam>
+            <param name="unit">Unit</param>
+            <param name="blueprintFeature">type: BlueprintFeature</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetRuntimeComponent``1(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get runtime component of <typeparamref name="TComponent" /> from a specific fact or null, if no match found.<br />
+            Only the first instance is returned, if the component type exists multiple times.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <param name="fact">Fact to get runtime component from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetRuntimeComponents``1(Kingmaker.EntitySystem.EntityFact)">
+            <summary>
+            Get all runtime components of <typeparamref name="TComponent" /> from a specific fact.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <param name="fact">Fact to get runtime component from.</param>
+        </member>
+        <member name="M:CodexLib.Helper.GetRuntimeComponents``1(Kingmaker.EntitySystem.Entities.UnitEntityData)">
+            <summary>
+            Get all runtime components of <typeparamref name="TComponent" /> from all of a unit's features.<br />
+            Never returns null.
+            </summary>
+            <typeparam name="TComponent">Component type on blueprint.</typeparam>
+            <param name="unit">Unit</param>
+        </member>
+        <member name="M:CodexLib.Helper.Clone``1(``0,System.String,System.String)">
+            <summary>
+            This creates a deep copy of ComponentsArray, but other references might still be shared and morphing can happen.<br /><br />
+            Watch out for these fields:<br />
+            BlueprintFeature: IsPrerequisiteFor
+            BlueprintAbility: m_Parent
+            </summary>
+            <param name="obj">Object to clone.</param>
+            <param name="name">New blueprint name.</param>
+            <param name="guid2">Guid to merge with, use for dynamic blueprints (unknown list of blueprints), otherwise empty.</param>
+        </member>
+        <member name="M:CodexLib.Helper.Clone``1(``0,System.Action{``0})">
+            <summary>
+            Creates deep copy of BlueprintComponent, but shallow copy of anything else.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.Clone``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Creates deep copy of <see cref="T:Kingmaker.Blueprints.BlueprintComponent" />.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.AddInfusion(CodexLib.AnyRef)">
+            <param name="blueprintFeature">type: BlueprintFeature</param>
+        </member>
+        <member name="M:CodexLib.Helper.AddWildTalent(CodexLib.AnyRef)">
+            <param name="blueprintFeature">type: BlueprintFeature</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateContextActionSavingThrow(Kingmaker.EntitySystem.Stats.SavingThrowType,Kingmaker.ElementsSystem.GameAction[])">
+            <summary>
+            Use MakeContextActionSavingThrow instead, if you want to inline ContextActionConditionalSaved.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.MakeRunActionApplyBuff(CodexLib.AnyRef,Kingmaker.UnitLogic.Mechanics.ContextDurationValue,System.Boolean,System.Boolean)">
+            <summary>
+            Creates an action list and adds a single apply buff action.
+            </summary>
+            <param name="buff">type: <b>BlueprintBuff</b></param>
+            <param name="duration" />
+            <param name="dispellable" />
+            <param name="toCaster" />
+        </member>
+        <member name="M:CodexLib.Helper.InjectCondition(Kingmaker.ElementsSystem.ActionList,Kingmaker.ElementsSystem.Condition,System.Boolean)">
+            <summary>
+            Puts a new Conditional infront of existing ActionList.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.SetEnchantment(Kingmaker.Blueprints.Items.Weapons.BlueprintItemWeapon,System.Object[])">
+            <summary>
+            Overwrite weapon enchantments.
+            </summary>
+            <param name="bp">Weapon to set enchantments</param>
+            <param name="BlueprintWeaponEnchantment">direct type, reference, or string</param>
+        </member>
+        <member name="M:CodexLib.Helper.AddEntries(Kingmaker.Blueprints.Classes.BlueprintProgression,System.Collections.Generic.List{Kingmaker.Blueprints.Classes.LevelEntry})">
+            <summary>Merges LevelEntries or appends new ones.</summary>
+        </member>
+        <member name="M:CodexLib.Helper.Add(Kingmaker.UnitLogic.Abilities.Blueprints.BlueprintAbility,System.Int32,CodexLib.AnyRef[])">
+            <summary>
+            Expands a spell list by the given spell at a specific spell level.
+            </summary>
+            <param name="spell">Spell which is added to spell list</param>
+            <param name="level">Spell Level</param>
+            <param name="blueprintSpellList">type: <b>BlueprintSpellList[]</b><br />spell list to expand</param>
+        </member>
+        <member name="M:CodexLib.Helper.StickyResolve(Kingmaker.Blueprints.BlueprintAbilityReference[])">
+            <summary>
+            Replace references with their sticky variant.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityResourceLogic(CodexLib.AnyRef,System.Int32)">
+            <summary>
+            BlueprintAbility component to consume resource on use.
+            </summary>
+            <param name="resource">type: <b>BlueprintAbilityResource</b></param>
+            <param name="amount">Amount of resource required to use the ability.</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAddAbilityResources(CodexLib.AnyRef)">
+            <param name="BlueprintAbilityResource">type: <b>BlueprintAbilityResource</b></param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateContextActionSpawnMonster(CodexLib.AnyRef,Kingmaker.UnitLogic.Mechanics.ContextDurationValue,Kingmaker.UnitLogic.Mechanics.ContextDiceValue,Kingmaker.UnitLogic.Mechanics.ContextValue,CodexLib.AnyRef,CodexLib.AnyRef,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Spawn creatures.
+            </summary>
+            <param name="unit">type: <b>BlueprintUnit</b></param>
+            <param name="duration">Summon duration. Defaults to 1 hour.</param>
+            <param name="count">Number of creatures to summon. Defaults to 1.</param>
+            <param name="levelValue" />
+            <param name="summonBuff">type: <b>BlueprintBuff</b><br />Defaults to SummonedUnitBuff.</param>
+            <param name="summonPool">type: <b>BlueprintSummonPool</b><br />Defaults to SummonMonsterPool.</param>
+            <param name="useLimit">If true use limit from summon pool (if any).</param>
+            <param name="linkToCaster" />
+            <param name="isControllable">If false is controlled by AI.</param>
+            <returns />
+        </member>
+        <member name="M:CodexLib.Helper.CreateAddFeatureIfHasFact(CodexLib.AnyRef)">
+            <summary>Adds a fact, but only fact not already granted through other means.</summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateContextActionReduceBuffDuration(CodexLib.AnyRef,System.Int32,Kingmaker.UnitLogic.Mechanics.DurationRate,System.Boolean,System.Boolean)">
+            <summary>
+            Reduces on extends buff duration. Used by spells that like Call Lightning that reduce remaining duration on use.
+            </summary>
+            <param name="buff">type: <b>BlueprintBuff</b></param>
+            <param name="duration">Time to extend or reduce the duration. Use positive values only.</param>
+            <param name="rate" />
+            <param name="increase">If false will reduces the duration, otherwise extend the duration.</param>
+            <param name="toTarget">If false will affect the caster.</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityDeliverProjectile(CodexLib.AnyRef,Kingmaker.UnitLogic.Abilities.Components.AbilityProjectileType,CodexLib.AnyRef,Kingmaker.Utility.Feet,Kingmaker.Utility.Feet)">
+            <summary>
+            Spawns a projectile. Can include an attack roll.
+            </summary>
+            <param name="projectile">type: <b>BlueprintProjectile</b></param>
+            <param name="type">Projectile type</param>
+            <param name="weapon">type: <b>BlueprintItemWeapon</b><br />Needs attack roll, if set. Otherwise no roll needed.</param>
+            <param name="length">Length of line or cone area effect.</param>
+            <param name="width">Width of line area effect.</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityShowIfCasterHasFact(CodexLib.AnyRef,System.Boolean)">
+            <summary>
+            Hide ability, if caster doesn't have fact. Invertable.
+            </summary>
+            <param name="UnitFact">type: <b>BlueprintUnitFact</b></param>
+            <param name="not">Invert logic.</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityEffectRunAction(Kingmaker.EntitySystem.Stats.SavingThrowType,Kingmaker.ElementsSystem.GameAction[])">
+            <summary>
+            Runs actions when ability hits. Waits for projectiles. Processes targets. If not 'SavingThrowType.Unknown', will run actions only at failed saving throw.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityEffectRunAction(Kingmaker.EntitySystem.Stats.SavingThrowType,Kingmaker.ElementsSystem.Condition[],Kingmaker.ElementsSystem.GameAction[],Kingmaker.ElementsSystem.GameAction[])">
+            <summary>
+            Runs in conditional or with saving throw. Cannot process both at the same time.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAbilityExecuteActionOnCast(Kingmaker.ElementsSystem.GameAction[])">
+            <summary>
+            Runs action before ability is cast. Does not wait for sfx or projectiles. Does not process targets.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.CreateContextConditionHasBuff(CodexLib.AnyRef,System.Boolean)">
+            <summary>
+            Condition caster has buff. Invertable.
+            </summary>
+            <param name="buff">type: <b>BlueprintBuff</b></param>
+            <param name="not">Invert logic.</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateContextActionApplyBuff(CodexLib.AnyRef,Kingmaker.UnitLogic.Mechanics.ContextDurationValue,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Apply buff to target or caster.
+            </summary>
+            <param name="buff">type: <b>BlueprintBuff</b></param>
+            <param name="duration" />
+            <param name="fromSpell" />
+            <param name="dispellable" />
+            <param name="toCaster" />
+            <param name="asChild" />
+        </member>
+        <member name="M:CodexLib.Helper.CreatePrerequisiteFeature(CodexLib.AnyRef,System.Boolean)">
+            <summary>
+            Prerequisite Feature
+            </summary>
+            <param name="feat">type: <b>BlueprintFeature</b></param>
+            <param name="any">Prerequisite.GroupType.Any or .All</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreatePrerequisiteClassLevel(CodexLib.AnyRef,System.Int32,System.Boolean)">
+            <summary>
+            Prerequisite levels in a character class.
+            </summary>
+            <param name="class">type: <b>BlueprintCharacterClass</b></param>
+            <param name="level" />
+            <param name="any">Prerequisite.GroupType.Any or .All</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreatePrerequisiteParametrizedFeature(CodexLib.AnyRef,Kingmaker.Enums.WeaponCategory,Kingmaker.Blueprints.Classes.Spells.SpellSchool,CodexLib.AnyRef,System.Boolean)">
+            <summary>
+            Prerequisite parametrized feature. Priority: Spell, SpellSchool, WeaponCategory
+            </summary>
+            <param name="feature">type: <b>BlueprintFeature</b></param>
+            <param name="weaponCategory" />
+            <param name="spellSchool" />
+            <param name="spell">type: <b>BlueprintAbility</b></param>
+            <param name="any">Prerequisite.GroupType.Any or .All</param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateAddFeatureOnApply(CodexLib.AnyRef)">
+            <param name="blueprintFeature">type: <b>BlueprintFeature</b></param>
+        </member>
+        <member name="M:CodexLib.Helper.CreateBlueprintItemWeapon(System.String,System.String,System.String,UnityEngine.Sprite,CodexLib.AnyRef,System.Nullable{Kingmaker.RuleSystem.DiceFormula},Kingmaker.RuleSystem.Rules.Damage.DamageTypeDescription,CodexLib.AnyRef,System.Boolean,System.Int32,CodexLib.AnyRef,CodexLib.AnyRef[])">
+            <summary>
+            Create weapon blueprint.
+            </summary>
+            <param name="name" />
+            <param name="displayName" />
+            <param name="description" />
+            <param name="icon" />
+            <param name="weaponType">type: <b>BlueprintWeaponType</b></param>
+            <param name="damageOverride" />
+            <param name="form" />
+            <param name="secondWeapon">type: <b>BlueprintItemWeapon</b></param>
+            <param name="primaryNatural" />
+            <param name="price" />
+            <param name="cloneVisuals">type: <b>BlueprintWeaponType</b> or <b>BlueprintItemWeapon</b></param>
+            <param name="enchantments">type: <b>BlueprintWeaponEnchantment[]</b></param>
+        </member>
+        <member name="M:CodexLib.Helper.SetReference(Kingmaker.Blueprints.BlueprintReferenceBase,Kingmaker.Blueprints.SimpleBlueprint)">
+            <summary>
+            Set a specific BlueprintReference to a specific Blueprint. The main purpose is to ensure guids match.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.ToRef``1(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Converts a collection of strings, references, and blueprints into a specified reference type.<br />
+            Can handle multiple different types and will recursively resolve collections.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Helper.ToAny(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Converts a collection of strings, references, and blueprints into a AnyRef reference type.<br />
+            Can handle multiple different types and will recursively resolve collections.
+            </summary>
+        </member>
+        <member name="T:CodexLib.IActionBarConvert">
+            <summary>
+            Allow custom action bar convertions (unfoldable variants).
+            </summary>
+        </member>
+        <member name="T:CodexLib.IActionBarDisableDrag">
+            <summary>
+            If attached to a component, will cause convertables to not drag.
+            </summary>
+        </member>
+        <member name="T:CodexLib.IAfterRule">
+            <summary>
+            Use the IAfterRule interface to place your component after all other.
+            Requires master patch.
+            </summary>
+        </member>
+        <member name="T:CodexLib.IBeforeRule">
+            <summary>
+            Use the IBeforeRule interface to place your component before any other.
+            Requires master patch.
+            </summary>
+        </member>
+        <member name="T:CodexLib.IMechanicGroup">
+            <summary>
+            Interface for Ability/Spell Group
+            </summary>
+        </member>
+        <member name="T:CodexLib.IMechanicRecalculate">
+            <summary>
+            Manipulate calculation for ranks/ability params.<br />
+            Greater priority runs first.<br />
+            Use priority:<br />
+            400 = change rank value<br />
+            300 = change shared value
+            </summary>
+        </member>
+        <member name="T:CodexLib.MasterPatch">
+            <summary>
+            If your mod uses components, run this code. Some components will not work properly without these patches.<br /><br /><code>MasterPatch.Run();</code></summary>
+        </member>
+        <member name="M:CodexLib.MasterPatch.Run">
+            <summary>
+            Call at least once, if you plan to use components.
+            </summary>
+        </member>
+        <member name="M:CodexLib.MasterPatch.Run(System.Type)">
+            <summary>
+            Use this if you want to enable only a specific patch. Ensures patch is only used once.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_AbilityAtWill">
+            <summary>
+            Provides logic for at will spells.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_ActivatableActionBar">
+            <summary>
+            Adds logic for automatic-only activatable. Set WeightInGroup to restrict use of Activatable.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_AOEAttackRolls">
+            <summary>
+            Logic for ContextConditionAttackRoll to make AOE attack rolls.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_ConditionExemption">
+            <summary>
+            Adds logic to ignore status effects under certain conditions.<br />
+            Used by AddConditionExceptions.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_ContextStatValue">
+            <summary>
+            Override of ContextValue by ContextStatValue.<br />
+            This patch makes ContextValue.Calculate quasi virtual.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_DebugReport">
+            <summary>
+            If a component causes an exception, it will try to resolve the asset name.<br />
+            If that name is null or wrong formated, it will crash the report and hide any meaningful log entries.<br />
+            This patch fills the missing data with nonsense to prevent that bug.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_FixAbilityTargets">
+            <summary>
+            If no AoERadiusProvider component is present, it will always default to TargetType.Any.
+            This patch checks the blueprint's settings CanTargetFriends and CanTargetEnemies instead.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_GetTargetProjectileFix">
+            <summary>
+            Fixes AbilityDeliverTeleportTrample not returning worldPosition.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_RulebookEventBusPriority">
+            <summary>
+            Use the IBeforeRule interface to place your component before any other.<br />
+            This patch ensures IBeforeRule comes first.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_RuleSpendCharge">
+            <summary>
+            Patch to trigger custom rule RuleSpendCharge.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_SpellSelectionParametrized">
+            <summary>
+            Custom logic for parametrized feature. Allows selection of any spells/abilities.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Patches.Patch_SpellSelectionParametrized.GetAllItems(Kingmaker.Blueprints.Classes.Selection.BlueprintParametrizedFeature,System.Collections.Generic.IEnumerable{Kingmaker.Blueprints.Classes.Selection.IFeatureSelectionItem}@)">
+            <summary>
+            Returns 'empty' item collection, since we don't actually need it.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Patches.Patch_SpellSelectionParametrized.GetItemsForUnit(Kingmaker.UnitLogic.UnitDescriptor,Kingmaker.UnitLogic.UnitDescriptor,Kingmaker.Blueprints.Classes.Selection.BlueprintParametrizedFeature,System.Collections.Generic.IEnumerable{Kingmaker.Blueprints.Classes.Selection.IFeatureSelectionItem}@)">
+            <summary>
+            Custom selection logic.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Patches.Patch_SpellSelectionParametrized.CanSelectFeature(Kingmaker.UnitLogic.UnitDescriptor,Kingmaker.UnitLogic.Class.LevelUp.LevelUpState,Kingmaker.UnitLogic.Class.LevelUp.FeatureSelectionState,Kingmaker.Blueprints.Classes.Selection.IFeatureSelectionItem,Kingmaker.Blueprints.Classes.Selection.BlueprintParametrizedFeature,System.Boolean@)">
+            <summary>
+            Can select any item that's not already picked.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Patches.Patch_SpellSelectionParametrized.FixView(Kingmaker.UnitLogic.Class.LevelUp.FeatureSelectionState,System.Collections.Generic.List{Kingmaker.UnitLogic.Class.LevelUp.FeatureSelectionViewState}@)">
+            <summary>
+            Fix call that usually tries to get generic view and replace the list with unit specific version.
+            </summary>
+        </member>
+        <member name="M:CodexLib.Patches.Patch_SpellSelectionParametrized.LevelUpActionPostLoad(Kingmaker.UnitLogic.Class.LevelUp.Actions.SelectFeature)">
+            <summary>
+            Fix for 'empty' Items collection.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patches.Patch_WeaponCategory">
+            <summary>
+            Use Helper.EnumCreateWeaponCategory(..) to add new weapon categories.<br />
+            This patch adds them to the selection.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Patch_ResourceOverride">
+            <summary>
+            Fix for overriding 'AbilityData.OverridenResourceLogic', when the logic is also IAbilityRestriction.
+            </summary>
+        </member>
+        <member name="T:CodexLib.RuleCombatManeuverWithWeapon">
+            <summary>
+            Maneuver rule to use weapon attack bonus.
+            </summary>
+        </member>
+        <member name="T:CodexLib.RuleResolveFunction">
+            <summary>
+            Simple rule for delayed execution. E.g for projectiles.
+            </summary>
+        </member>
+        <member name="T:CodexLib.RuleSpendCharge">
+            <summary>
+            Triggers before AbilityData consumes charges or material. May skip charge and/or material consumption.
+            </summary>
+        </member>
+        <member name="T:CodexLib.Scope">
+            <summary>
+            Override logger and path for blueprint resolution. Helper calls that generate guids must be called in your scope, otherwise guids will be dumped outside your project.<br /><br /><code>using var scope = new Scope(Main.ModPath, Main.logger);</code></summary>
+        </member>
+        <member name="T:Shared.LocalParameterAttribute">
+            <summary>
+            Local selection for TranspilerTool delegate.
+            </summary>
+        </member>
+        <member name="F:Shared.LocalParameterAttribute.Name">
+            <summary>Name of local.</summary>
+        </member>
+        <member name="F:Shared.LocalParameterAttribute.Type">
+            <summary>Type of local. If missing, will assume by type of parameter.</summary>
+        </member>
+        <member name="F:Shared.LocalParameterAttribute.Index">
+            <summary>Index of local.</summary>
+        </member>
+        <member name="F:Shared.LocalParameterAttribute.IndexByType">
+            <summary>Index of local, filtered by exactly matching type.</summary>
+        </member>
+        <member name="M:Shared.LocalParameterAttribute.#ctor(System.String,System.Type,System.Int32,System.Int32)">
+            <summary>
+            Parameter will be called with a local. By indices is only valid for original locals. Use name for self declared locals. <br />
+            If <b>name</b> is set, will look for self declared local or create one. <br />
+            If <b>index</b> is 0 or greater, the absolute index will be chosen. If the type is incompatable an exception is thrown. <br />
+            If <b>indexByType</b> is 0 or greater, the index in a collection of exact matching type will be chosen. <br />
+            If both indices are below zero, the current CodeInstruction will determine the local. 
+            </summary>
+        </member>
+        <member name="T:Shared.OriginalParameterAttribute">
+            <summary>
+            Original parameter selection. If you need to define a different name.
+            </summary>
+        </member>
+        <member name="F:Shared.OriginalParameterAttribute.Name">
+            <summary>Original method name this parameter should be loaded with.</summary>
+        </member>
+        <member name="M:Shared.OriginalParameterAttribute.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.CacheData`1">
+            <summary>
+            Cache for slow operations. Will return known solution to specified arguments. Otherwise calls getter and remembers solution in cache.
+            </summary>
+        </member>
+        <member name="M:Shared.CacheData`1.#ctor(System.Func{System.Object[],`0},System.Int32)">
+            <summary>
+            Cache for slow operations. Will return known solution to specified arguments. Otherwise calls getter and remembers solution in cache.
+            </summary>
+            <param name="getter">Function to resolve unknown solution.</param>
+            <param name="size">Cache size.</param>
+        </member>
+        <member name="M:Shared.CacheData`1.Get(System.Object[])">
+            <summary>
+            Get solution for specific argument collection. Calls getter, if solution not in cache.
+            </summary>
+        </member>
+        <member name="T:Shared.ExceptionMissingReturn">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingReturn.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingReturn.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionInvalidReturn">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidReturn.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidReturn.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionMissingInstance">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingInstance.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingInstance.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionMissingParameter">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingParameter.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingParameter.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionInvalidParameter">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidParameter.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidParameter.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionMissingResult">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingResult.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingResult.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionInvalidResult">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidResult.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidResult.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionInvalidInstance">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidInstance.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidInstance.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionInvalidParameterOrder">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidParameterOrder.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionInvalidParameterOrder.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.ExceptionMissingRef">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingRef.#ctor">
+            <summary />
+        </member>
+        <member name="M:Shared.ExceptionMissingRef.#ctor(System.String)">
+            <summary />
+        </member>
+        <member name="T:Shared.Extensions">
+            <summary>
+            Custom extensions.
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.FindIndex``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            Find index in a collection by a predicate.
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.AtIndex``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Get element at index or default.
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.IsTypeCompatible(System.Type,System.Type)">
+            <summary>
+            Checks if right type can be assigned to left type. <br />
+            Works similiar to IsAssignableFrom, but will returns false for ValueTypes (which need boxing) and void (which overflows the stack).     
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.AddUnique``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Adds items to a list, which are not already in the list. Compares with Equal().
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.AddUnique``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0})">
+            <summary>
+            Adds items to a list, which are not already in the list. Types can be different. Compares with Equal() of <typeparamref name="T1" />.
+            </summary>
+        </member>
+        <member name="M:Shared.Extensions.AddUnique2``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0})">
+            <summary>
+            Adds items to a list, which are not already in the list. Types can be different. Compares with Equal() of <typeparamref name="T2" />.
+            </summary>
+        </member>
+        <member name="T:Shared.Logger">
+            <summary>
+            Methods to print to standard output.
+            </summary>
+        </member>
+        <member name="M:Shared.Logger.PrintDebug(System.String,System.String)">
+            <summary>
+            Only prints in DEBUG.
+            </summary>
+        </member>
+        <member name="M:Shared.Logger.Print(System.String)">
+            <summary>
+            Prints to standard output.
+            </summary>
+        </member>
+        <member name="M:Shared.Logger.PrintWarning(System.String,System.String)">
+            <summary>
+            Prints to standard output.
+            </summary>
+        </member>
+        <member name="M:Shared.Logger.PrintError(System.String,System.String)">
+            <summary>
+            Prints to standard output.
+            </summary>
+        </member>
+        <member name="M:Shared.Logger.PrintException(System.Exception)">
+            <summary>
+            Prints to standard output.
+            </summary>
+        </member>
+        <member name="T:Shared.SerializationTool">
+            <summary>
+            Tool to handle (de-)serialization.
+            </summary>
+        </member>
+        <member name="T:Shared.BaseSettings`1">
+            <summary>
+            Inherit this class in your settings class. Implements basic load/save functions.
+            </summary>
+            <typeparam name="T">Class that contains settings.</typeparam>
+        </member>
+        <member name="P:Shared.BaseSettings`1.Version">
+            <summary>File version. Overwrite this in the constructor.</summary>
+        </member>
+        <member name="P:Shared.BaseSettings`1.NewFeatureDefaultOn">
+            <summary>Whenever new features should be considered on by default.</summary>
+        </member>
+        <member name="P:Shared.BaseSettings`1.Blacklist">
+            <summary>Collection of features explicitly turned off.</summary>
+        </member>
+        <member name="P:Shared.BaseSettings`1.Whitelist">
+            <summary>Collection of features explicitly turned on.</summary>
+        </member>
+        <member name="F:Shared.BaseSettings`1.FilePath">
+            <summary>File path to load from / save to.</summary>
+        </member>
+        <member name="F:Shared.BaseSettings`1.JSettings">
+            <summary>Serialization settings.</summary>
+        </member>
+        <member name="M:Shared.BaseSettings`1.OnUpdate">
+            <summary>
+            Called, if file version is different from current version. Return true, if file should be saved.
+            </summary>
+        </member>
+        <member name="M:Shared.BaseSettings`1.TrySave">
+            <summary>
+            Try save file.
+            </summary>
+        </member>
+        <member name="M:Shared.BaseSettings`1.TryLoad(System.String,System.String)">
+            <summary>
+            Try load file. Creates new file, if loading failed for any reason.
+            </summary>
+            <param name="path">Path settings should be saved.</param>
+            <param name="file">Name of settings file. Should include file extension.</param>
+        </member>
+        <member name="T:Shared.ISettings">
+            <summary>
+            Abstract settings interface.
+            </summary>
+        </member>
+        <member name="P:Shared.ISettings.Version">
+            <summary>File version.</summary>
+        </member>
+        <member name="P:Shared.ISettings.NewFeatureDefaultOn">
+            <summary>Whenever new features should be considered on by default.</summary>
+        </member>
+        <member name="P:Shared.ISettings.Blacklist">
+            <summary>Collection of features explicitly turned off.</summary>
+        </member>
+        <member name="P:Shared.ISettings.Whitelist">
+            <summary>Collection of features explicitly turned on.</summary>
+        </member>
+        <member name="T:Shared.TranspilerTool">
+            <summary>
+            Tool to automate transpiler modifications.
+            </summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.Index">
+            <summary>Index of the currently selected line. 'Index' usually refers to this variable.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.Code">
+            <summary>Collection of all CodeInstructions.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.Generator">
+            <summary>ILGenerator. Required for creating new labels or locals.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.Original">
+            <summary>MethodInfo of Original. 'Original' usually refers to the method being patched by the transpiler.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.Locals">
+            <summary>Collection of locals used by the original method.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.LocalsExtended">
+            <summary>Full collection of locals, original or created by this tool.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.LabelsExtended">
+            <summary>Full collection of labels, original or created by this tool.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.Current">
+            <summary>Currently selected line of code.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.Next">
+            <summary>Line of code after selection. Does not move index. Returns null, if end of code.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.Previous">
+            <summary>Line of code before selection. Does not move index. Returns null, if index is 0.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.IsStatic">
+            <summary>True if original method is static. False if it's an instance object.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.IsFirst">
+            <summary>True if index is 0.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.IsLast">
+            <summary>True if index is beyond the collection of lines.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.Count">
+            <summary>Total count of lines.</summary>
+        </member>
+        <member name="P:Shared.TranspilerTool.IsReadOnly">
+            <summary />
+        </member>
+        <member name="P:Shared.TranspilerTool.Item(System.Int32)">
+            <summary>Code of a specific index. Does not move selected index.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.#ctor(System.Collections.Generic.IEnumerable{HarmonyLib.CodeInstruction},System.Reflection.Emit.ILGenerator,System.Reflection.MethodBase)">
+            <summary>
+            Requires all optional objects from HarmonyTranspiler. Throws if any is null or original is not of type MethodInfo.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.First">
+            <summary>
+            Moves index to first line.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Last">
+            <summary>
+            Moves index to last line.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Offset(System.Int32)">
+            <summary>
+            Moves index by <paramref name="offset" />. Negative values are allowed. Does not go past boundaries.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Seek(System.Func{Shared.TranspilerTool,System.Boolean})">
+            <summary>
+            Moves index forward until predicate matches. Throws if no match found.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Rewind(System.Func{Shared.TranspilerTool,System.Boolean})">
+            <summary>
+            Moves index backward until predicate matches. Throws if no match found.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Seek(System.Type,System.String,System.Type[],System.Type[])">
+            <summary>
+            Moves index forward until calling a matching method or accessing a matching field. <br />
+            Also resolves property getter, but their setter is ignored.
+            </summary>
+            <seealso cref="M:Shared.TranspilerTool.GetMemberInfo(System.Type,System.String,System.Type[],System.Type[])" />
+        </member>
+        <member name="M:Shared.TranspilerTool.Rewind(System.Type,System.String,System.Type[],System.Type[])">
+            <summary>
+            Moves index backward until calling a matching method or accessing a matching field. <br />
+            Also resolves property getter, but their setting is ignored.
+            </summary>
+            <seealso cref="M:Shared.TranspilerTool.GetMemberInfo(System.Type,System.String,System.Type[],System.Type[])" />
+        </member>
+        <member name="M:Shared.TranspilerTool.Seek(System.Reflection.Emit.OpCode,System.Object)">
+            <summary>
+            Moves index forward until a specified OpCode is used. Can optionally compare the operand as well.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Rewind(System.Reflection.Emit.OpCode,System.Object)">
+            <summary>
+            Moves index backward until a specified OpCode is used. Can optionally compare the operand as well.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Seek(System.Boolean,System.Func{Shared.TranspilerTool,System.Boolean}[])">
+            <summary>
+            Moves index forward until predicates match in order. <br />
+            If <paramref name="onStart" /> is true, will place index to the start of the match. Otherwise at the end.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Is(System.Reflection.Emit.OpCode)">
+            <summary>Checks if current line matches OpCode.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Is(System.Reflection.Emit.OpCode,System.Object)">
+            <summary>Checks if current line matches OpCode and operand.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.Calls(System.Type,System.String,System.Type[],System.Type[])">
+            <summary>
+            Checks if current line calls or accesses given member.
+            </summary>
+            <seealso cref="M:Shared.TranspilerTool.GetMemberInfo(System.Type,System.String,System.Type[],System.Type[])" />
+        </member>
+        <member name="M:Shared.TranspilerTool.Calls(System.Reflection.MemberInfo)">
+            <summary>
+            Checks if current line calls or accesses given member.
+            </summary>
+            <seealso cref="M:Shared.TranspilerTool.GetMemberInfo(System.Type,System.String,System.Type[],System.Type[])" />
+        </member>
+        <member name="M:Shared.TranspilerTool.IsStloc(System.Int32)">
+            <summary>Checks if current line stores local and has matching index.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsStloc(System.String)">
+            <summary>Checks if current line stores local and has matching name.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsStloc(System.Type)">
+            <summary>Checks if current line stores local and has exactly matching type.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLdloc(System.Int32)">
+            <summary>Checks if current line loads local and has matching index.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLdloc(System.String)">
+            <summary>Checks if current line loads local and has matching name.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLdloc(System.Type)">
+            <summary>Checks if current line loads local and has exactly matching type.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLoadConstant(System.Int64)">
+            <summary>Checks if current line loads a constant.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLoadConstant(System.Enum)">
+            <summary>Checks if current line loads a constant.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IsLoadConstant(System.Double)">
+            <summary>Checks if current line loads a constant.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertCall(System.Boolean,System.Delegate)">
+            <summary>
+            Inserts call to a delegate. Either before or after current line. Increments index.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertPushLocal(System.Boolean,System.Reflection.ParameterInfo)">
+            <summary>
+            Tries to push local onto stack. Returns true if successfull.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertPushOriginal(System.Boolean,System.Reflection.ParameterInfo)">
+            <summary>
+            Tries to push original parameter onto stack. Returns true if successfull.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertBefore(System.Reflection.Emit.OpCode,System.Object)">
+            <summary>
+            Injects IL code. Increments index (still pointing to the same code).
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertAfter(System.Reflection.Emit.OpCode,System.Object)">
+            <summary>
+            Injects IL code. Increments index (pointing to the new code).
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertBefore(System.Delegate)">
+            <summary>
+            Injects call. Increments index (still pointing to the same code). <br />
+            Delegate may return void. Otherwise the first parameter is taken from the stack and replaced with the return value.
+            </summary>
+            <param name="func">
+                <b>[T] Function([T __stack], [object __instance], [object arg0], [object arg1...])</b>
+            </param>
+            <remarks>
+            The delegate may define any of the original parameters, locals, and __instance (if non-static).<br />
+            These optional parameters are matched by name, with <see cref="T:Shared.LocalParameterAttribute" />, or with <see cref="T:Shared.OriginalParameterAttribute" />.<br />
+            If <see cref="T:Shared.LocalParameterAttribute" /> doesn't match any existing locals, then a new one is generated. Non matching parameters will throw.<br />
+            If the optional parameter's source is ref (or out), then the delegate must also use ref. Otherwise ref is optional.
+            </remarks>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertAfter(System.Delegate)">
+            <summary>
+            Injects call. Increments index (pointing to the new code). <br />
+            Delegate may return void. Otherwise the first parameter is taken from the stack and replaced with the return value.
+            </summary>
+            <param name="func">
+                <b>[T] Function([T __stack], [object __instance], [object arg0], [object arg1...])</b>
+            </param>
+            <remarks>
+            The delegate may define any of the original parameters, locals, and __instance (if non-static).<br />
+            These optional parameters are matched by name, with <see cref="T:Shared.LocalParameterAttribute" />, or with <see cref="T:Shared.OriginalParameterAttribute" />.<br />
+            If <see cref="T:Shared.LocalParameterAttribute" /> doesn't match any existing locals, then a new one is generated. Non matching parameters will throw.<br />
+            If the optional parameter's source is ref (or out), then the delegate must also use ref. Otherwise ref is optional.
+            </remarks>
+        </member>
+        <member name="M:Shared.TranspilerTool.InsertReturn(System.Delegate,System.Boolean)">
+            <summary>
+            Injects return value. Returns original method, if returning false or void. If the original has a return value, then it must be supplied with __result. <br />
+            This function will inject necessary load OpCodes.
+            </summary>
+            <param name="func">
+                <b>[bool] Function(T out __result, [object __instance], [object arg0], [object arg1...])</b>
+            </param>
+            <param name="before">If true will inject delegate before current line (still pointing to the same code). Otherwise after (pointing to the new code).</param>
+            <remarks>
+            The delegate may define any of the original parameters, locals, and __instance (if non-static).<br />
+            These optional parameters are matched by name, with <see cref="T:Shared.LocalParameterAttribute" />, or with <see cref="T:Shared.OriginalParameterAttribute" />.<br />
+            If <see cref="T:Shared.LocalParameterAttribute" /> doesn't match any existing locals, then a new one is generated. Non matching parameters will throw.<br />
+            If the optional parameter's source is ref (or out), then the delegate must also use ref. Otherwise ref is optional.
+            </remarks>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceCall(System.Delegate)">
+            <summary>
+                <b>Instance methods need their instance as the first parameter!</b>
+                <br />
+            Replaces the current IL line with call. The delegate must return the replacement return type and must have the same parameters with identical names and order.
+            </summary>
+            <param name="func">
+                <b>object Function(object object_instance, object parameter0, object parameter1..., [object __instance], [object arg0], [object arg1...])</b>
+            </param>
+            <remarks>
+            The current line may contain a method call or field access.<br />
+            The delegate may define any of the original parameters, locals, and __instance (if non-static), but only after the replacement parameters.<br />
+            These optional parameters are matched by name, with <see cref="T:Shared.LocalParameterAttribute" />, or with <see cref="T:Shared.OriginalParameterAttribute" />.<br />
+            If <see cref="T:Shared.LocalParameterAttribute" /> doesn't match any existing locals, then a new one is generated. Non matching parameters will throw.<br />
+            If the optional parameter's source is ref (or out), then the delegate must also use ref. Otherwise ref is optional.
+            </remarks>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceAllCalls(System.Type,System.String,System.Delegate,System.Type[],System.Type[])">
+            <summary>
+            Same as <see cref="M:Shared.TranspilerTool.ReplaceCall(System.Delegate)" />, but iterates all lines of code.
+            </summary>
+            <param name="type">Declaring type of the member to be replaced.</param>
+            <param name="name">Name of the member to be replaced.</param>
+            <param name="func">Delegate the member should be replaced with.</param>
+            <param name="parameters">Optional parameter definition, if target method is overloaded.</param>
+            <param name="generics">Optional generics definition, if target method has generics.</param>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceAllCalls(System.Reflection.MemberInfo,System.Delegate)">
+            <summary>
+            Same as <see cref="M:Shared.TranspilerTool.ReplaceCall(System.Delegate)" />, but iterates all lines of code.
+            </summary>
+            <param name="original">Target member.</param>
+            <param name="func">Delegate the member should be replaced with.</param>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceConstant(System.Enum)">
+            <summary>
+            Change current line's load to a new value. Can be any integer type. Throws if current isn't OpCode.Ldc_i.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceConstant(System.Int64)">
+            <summary>
+            Change current line's load to a new value. Can be any integer type. Throws if current isn't OpCode.Ldc_i.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceConstant(System.Double)">
+            <summary>
+            Change current line's load to a new value. Can be any float-point type. Throws if current isn't OpCode.Ldc_r.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceAllConstant(System.Enum,System.Enum,System.Int32,System.Int32)">
+            <summary>
+            Change load to a new value. Can be any integer type. Throws if current isn't OpCode.Ldc_i.<br />
+            Optionally define start and end index.<br /><b>0 and 1 may change boolean values too.</b></summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceAllConstant(System.Int64,System.Int64,System.Int32,System.Int32)">
+            <summary>
+            Change load to a new value. Can be any integer type. Throws if current isn't OpCode.Ldc_i.<br />
+            Optionally define start and end index.<br /><b>0 and 1 may change boolean values too.</b></summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceAllConstant(System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Change load to a new value. Can be any float-point type. Throws if current isn't OpCode.Ldc_r.<br />
+            Optionally define start and end index.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ReplaceNOP">
+            <summary>
+            Change current line to NOP.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NextJumpAlways">
+            <summary>
+            Moves index forward until a branched jump occures. Then injects jump to the same label. <br />
+            Throws if a different type of jump is found first.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NextJumpNever">
+            <summary>
+            Moves index forward until a branched jump occures. Then replaces its label with a label to the next line.<br />
+            Throws if a different type of jump is found first.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetLabel(HarmonyLib.CodeInstruction,System.String,System.Boolean)">
+            <summary>
+            Get a label to a specific CodeInstruction.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetLabel(System.String,System.Boolean)">
+            <summary>
+            Get label with a specific name or create a new label, if name is null or non-existent.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NameLabel(System.Int32,System.String)">
+            <summary>
+            Set name of label by index.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NameLabel(System.Reflection.Emit.Label,System.String)">
+            <summary>
+            Set name of label.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetLocal(System.String,System.Type,System.Boolean)">
+            <summary>
+            Get local with a specific name or create a new local, if name is null or non-existent and type is given.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NameLocal(System.Int32,System.String)">
+            <summary>
+            Set name of local by index.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.NameLocal(System.Reflection.LocalVariableInfo,System.String)">
+            <summary>
+            Set name of local.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetLocal">
+            <summary>
+            Get local of current line. May return empty LocalInfo.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetLocalIndex">
+            <summary>
+            Get index of local of current line. May return -1.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.IndexOf(HarmonyLib.CodeInstruction)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.Insert(System.Int32,HarmonyLib.CodeInstruction)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.RemoveAt(System.Int32)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.Add(HarmonyLib.CodeInstruction)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.Clear">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.Contains(HarmonyLib.CodeInstruction)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.CopyTo(HarmonyLib.CodeInstruction[],System.Int32)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.Remove(HarmonyLib.CodeInstruction)">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.GetEnumerator">
+            <summary />
+        </member>
+        <member name="M:Shared.TranspilerTool.System#Collections#IEnumerable#GetEnumerator">
+            <summary />
+        </member>
+        <member name="F:Shared.TranspilerTool.OpCode_Ldc_i">
+            <summary>Collection of Ldc_i opcodes.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.OpCode_Ldc_r">
+            <summary>Collection of Ldc_r opcodes.</summary>
+        </member>
+        <member name="F:Shared.TranspilerTool.OpCode_Member">
+            <summary>Collection of member opcodes.</summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.op_Increment(Shared.TranspilerTool)">
+            <summary>
+            Increment index by 1.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.op_Decrement(Shared.TranspilerTool)">
+            <summary>
+            Decrement index by 1.
+            </summary>
+        </member>
+        <member name="F:Shared.TranspilerTool._memberCache">
+            <summary>
+            Cache of MemberInfo.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetMemberInfo(System.Type,System.String,System.Type[],System.Type[])">
+            <summary>
+            Get MemberInfo for a specific method, field, or get-property.
+            </summary>
+            <param name="type">Declaring type.</param>
+            <param name="name">Method or field name.</param>
+            <param name="parameters">Only for methods.</param>
+            <param name="generics">Only for methods.</param>
+        </member>
+        <member name="M:Shared.TranspilerTool.GetStackChange(System.Reflection.Emit.StackBehaviour)">
+            <summary>
+            Returns value of stack change. Zero has no change. Negative values pop from stack. Positive values push to stack.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ThrowParameterIncompatible(System.Reflection.ParameterInfo,System.Type)">
+            <summary>
+            Throws if type cannot be assigned to parameter. Handles by-ref resolution.<br />
+            Returns true, if operation must use dereference.
+            </summary>
+        </member>
+        <member name="M:Shared.TranspilerTool.ThrowParameterIncompatible(System.Type,System.Type)">
+            <summary>
+            Throws if type cannot be assigned to parameter. Handles by-ref resolution.<br />
+            Returns true, if operation must use dereference.
+            </summary>
+        </member>
+        <member name="T:Shared.LabelInfo">
+            <summary>
+            Struct to hold Label and string.
+            </summary>
+        </member>
+        <member name="F:Shared.LabelInfo.Label">
+            <summary />
+        </member>
+        <member name="F:Shared.LabelInfo.Name">
+            <summary />
+        </member>
+        <member name="P:Shared.LabelInfo.Index">
+            <summary />
+        </member>
+        <member name="P:Shared.LabelInfo.IsEmpty">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.#ctor(System.Reflection.Emit.Label,System.String)">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.#ctor(System.Int32,System.String)">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.ToString">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.Equals(System.Object)">
+            <summary>
+            Compares LabelInfo, int, Label, or string. Always returns false if IsEmpty.
+            </summary>
+        </member>
+        <member name="M:Shared.LabelInfo.GetHashCode">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.op_Implicit(Shared.LabelInfo)~System.Reflection.Emit.Label">
+            <summary />
+        </member>
+        <member name="M:Shared.LabelInfo.op_Implicit(Shared.LabelInfo)~System.Int32">
+            <summary />
+        </member>
+        <member name="T:Shared.LocalInfo">
+            <summary>
+            Struct to hold LocalVariableInfo and string.
+            </summary>
+        </member>
+        <member name="F:Shared.LocalInfo.Local">
+            <summary />
+        </member>
+        <member name="F:Shared.LocalInfo.Name">
+            <summary />
+        </member>
+        <member name="P:Shared.LocalInfo.Index">
+            <summary />
+        </member>
+        <member name="P:Shared.LocalInfo.Type">
+            <summary />
+        </member>
+        <member name="P:Shared.LocalInfo.IsEmpty">
+            <summary />
+        </member>
+        <member name="M:Shared.LocalInfo.#ctor(System.Reflection.LocalVariableInfo,System.String)">
+            <summary />
+        </member>
+        <member name="M:Shared.LocalInfo.ToString">
+            <summary />
+        </member>
+        <member name="M:Shared.LocalInfo.Equals(System.Object)">
+            <summary>
+            Compares LocalInfo, int, LocalVariableInfo, or string. Always returns false if IsEmpty.
+            </summary>
+        </member>
+        <member name="M:Shared.LocalInfo.GetHashCode">
+            <summary />
+        </member>
+        <member name="M:Shared.LocalInfo.op_Implicit(Shared.LocalInfo)~System.Reflection.LocalVariableInfo">
+            <summary />
+        </member>
+        <member name="M:Shared.LocalInfo.op_Implicit(Shared.LocalInfo)~System.Int32">
+            <summary />
+        </member>
+    </members>
+</doc>

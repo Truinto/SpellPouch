@@ -282,15 +282,18 @@ namespace SpellPouch
         private static void KeepOpen1(ActionBarVM __instance, out int __state)
         {
             __state = -1;
-
-            foreach (var slot in __instance.Slots)
+            try
             {
-                if (slot.ConvertedVm?.Value != null && slot.Index >= 0 && slot.MechanicActionBarSlot is IMechanicGroup)
+                foreach (var slot in __instance.Slots)
                 {
-                    __state = slot.Index;
-                    break;
+                    if (slot.ConvertedVm?.Value != null && slot.Index >= 0 && slot.MechanicActionBarSlot is IMechanicGroup)
+                    {
+                        __state = slot.Index;
+                        break;
+                    }
                 }
             }
+            catch (Exception e) { Main.PrintException(e); }
         }
 
         [HarmonyPatch(typeof(ActionBarVM), nameof(ActionBarVM.OnUnitChanged))]

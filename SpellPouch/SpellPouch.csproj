@@ -6,21 +6,22 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 		<Authors>Truinto</Authors>
-		<Title>SpellPouch</Title>
+		<Title>$(MSBuildProjectName)</Title>
 		<RepositoryUrl>https://github.com/Truinto/DarkCodex</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RootNamespace>SpellPouch</RootNamespace>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<DebugType>embedded</DebugType>
+		<DebugSymbols>true</DebugSymbols>
 	</PropertyGroup>
-	
+
 	<!-- Shared Libs -->
-	<Import Project="..\..\DarkCodex\CodexShared\CodexShared.projitems" Label="Shared" />
-	
+
 	<!-- Nuget Packages -->
 	<ItemGroup>
-	  <PackageReference Include="AssemblyPublicizer" Version="1.0.2" ExcludeAssets="runtime" />
-	  <PackageReference Include="BuildTaskVersionControl" Version="1.0.4" ExcludeAssets="runtime" />
+		<PackageReference Include="AssemblyPublicizer" Version="1.0.2" ExcludeAssets="runtime" />
+		<PackageReference Include="BuildTaskVersionControl" Version="1.0.4" ExcludeAssets="runtime" />
 	</ItemGroup>
 
 	<!-- Common References -->
@@ -34,51 +35,52 @@
 		<Reference Include="System.Data" />
 		<Reference Include="System.Net.Http" />
 	</ItemGroup>
-		
+
 	<!-- Project References -->
 	<ItemGroup>
-		<Reference Include="0Harmony_public" HintPath="$(WrathManaged)\0Harmony_public.dll" />
-		<Reference Include="Assembly-CSharp_public" HintPath="$(WrathManaged)\Assembly-CSharp_public.dll" />
-		<Reference Include="Owlcat.Runtime.UI_public" HintPath="$(WrathManaged)\Owlcat.Runtime.UI_public.dll" />
-		
-		<Reference Include="UnityModManager" HintPath="$(WrathManaged)\UnityModManager\UnityModManager.dll" />
-		<Reference Include="Assembly-CSharp-firstpass" HintPath="$(WrathManaged)\Assembly-CSharp-firstpass.dll" />
-		<Reference Include="Newtonsoft.Json" HintPath="$(WrathManaged)\Newtonsoft.Json.dll" />
-		<Reference Include="UniRx" HintPath="$(WrathManaged)\UniRx.dll" />
-		<Reference Include="DotNetZip" HintPath="$(WrathManaged)\DotNetZip.dll" />
-		<Reference Include="Owlcat.SharedTypes" HintPath="$(WrathManaged)\Owlcat.SharedTypes.dll" />
-		<Reference Include="Owlcat.Runtime.Core" HintPath="$(WrathManaged)\Owlcat.Runtime.Core.dll" />
-		<Reference Include="Owlcat.Runtime.Validation" HintPath="$(WrathManaged)\Owlcat.Runtime.Validation.dll" />
-		<Reference Include="UnityEngine" HintPath="$(WrathManaged)\UnityEngine.dll" />
-		<Reference Include="UnityTextMeshPro" HintPath="$(WrathManaged)\Unity.TextMeshPro.dll" />
-		<Reference Include="UnityEngine.UI" HintPath="$(WrathManaged)\UnityEngine.UI.dll" />
-		<Reference Include="UnityEngine.AnimationModule" HintPath="$(WrathManaged)\UnityEngine.AnimationModule.dll" />
-		<Reference Include="UnityEngine.CoreModule" HintPath="$(WrathManaged)\UnityEngine.CoreModule.dll" />
-		<Reference Include="UnityEngine.ImageConversionModule" HintPath="$(WrathManaged)\UnityEngine.ImageConversionModule.dll" />
-		<Reference Include="UnityEngine.IMGUIModule" HintPath="$(WrathManaged)\UnityEngine.IMGUIModule.dll" />
-		<Reference Include="UnityEngine.JSONSerializeModule" HintPath="$(WrathManaged)\UnityEngine.JSONSerializeModule.dll" />
-		<Reference Include="UnityEngine.ParticleSystemModule" HintPath="$(WrathManaged)\UnityEngine.ParticleSystemModule.dll" />
-		<Reference Include="UnityEngine.TextRenderingModule" HintPath="$(WrathManaged)\UnityEngine.TextRenderingModule.dll" />
-		<Reference Include="UnityEngine.InputLegacyModule" HintPath="$(WrathManaged)\UnityEngine.InputLegacyModule.dll" />
-		<Reference Include="UnityEngine.UIModule" HintPath="$(WrathManaged)\UnityEngine.UIModule.dll" />
-		
-		<ProjectReference Include="..\..\DarkCodex\CodexLib\CodexLib.csproj" Project="{c518e346-ddbd-498a-bef9-d50ff314ad38}" Name="CodexLib" Private="False" />
+		<Reference Include="0Harmony_public" HintPath="$(GameManaged)\0Harmony_public.dll" />
+		<Reference Include="Assembly-CSharp_public" HintPath="$(GameManaged)\Assembly-CSharp_public.dll" />
+		<Reference Include="Owlcat.Runtime.UI_public" HintPath="$(GameManaged)\Owlcat.Runtime.UI_public.dll" />
+
+		<Reference Include="UnityModManager" HintPath="$(GameManaged)\UnityModManager\UnityModManager.dll" />
+		<Reference Include="Assembly-CSharp-firstpass" HintPath="$(GameManaged)\Assembly-CSharp-firstpass.dll" />
+		<Reference Include="Newtonsoft.Json" HintPath="$(GameManaged)\Newtonsoft.Json.dll" />
+		<Reference Include="UniRx" HintPath="$(GameManaged)\UniRx.dll" />
+		<Reference Include="DotNetZip" HintPath="$(GameManaged)\DotNetZip.dll" />
+		<Reference Include="Owlcat.SharedTypes" HintPath="$(GameManaged)\Owlcat.SharedTypes.dll" />
+		<Reference Include="Owlcat.Runtime.Core" HintPath="$(GameManaged)\Owlcat.Runtime.Core.dll" />
+		<Reference Include="Owlcat.Runtime.Validation" HintPath="$(GameManaged)\Owlcat.Runtime.Validation.dll" />
+		<Reference Include="UnityEngine" HintPath="$(GameManaged)\UnityEngine.dll" />
+		<Reference Include="UnityTextMeshPro" HintPath="$(GameManaged)\Unity.TextMeshPro.dll" />
+		<Reference Include="UnityEngine.UI" HintPath="$(GameManaged)\UnityEngine.UI.dll" />
+		<Reference Include="UnityEngine.AnimationModule" HintPath="$(GameManaged)\UnityEngine.AnimationModule.dll" />
+		<Reference Include="UnityEngine.CoreModule" HintPath="$(GameManaged)\UnityEngine.CoreModule.dll" />
+		<Reference Include="UnityEngine.ImageConversionModule" HintPath="$(GameManaged)\UnityEngine.ImageConversionModule.dll" />
+		<Reference Include="UnityEngine.IMGUIModule" HintPath="$(GameManaged)\UnityEngine.IMGUIModule.dll" />
+		<Reference Include="UnityEngine.JSONSerializeModule" HintPath="$(GameManaged)\UnityEngine.JSONSerializeModule.dll" />
+		<Reference Include="UnityEngine.ParticleSystemModule" HintPath="$(GameManaged)\UnityEngine.ParticleSystemModule.dll" />
+		<Reference Include="UnityEngine.TextRenderingModule" HintPath="$(GameManaged)\UnityEngine.TextRenderingModule.dll" />
+		<Reference Include="UnityEngine.InputLegacyModule" HintPath="$(GameManaged)\UnityEngine.InputLegacyModule.dll" />
+		<Reference Include="UnityEngine.UIModule" HintPath="$(GameManaged)\UnityEngine.UIModule.dll" />
+
+		<Reference Include="CodexLib" HintPath="$(SolutionDir)\@CodexLib\CodexLib.dll" Private="false" />
 	</ItemGroup>
 
 	<!-- Other Files -->
 	<ItemGroup>
-	  <None Update="changelog.md" CopyToOutputDirectory="PreserveNewest" />
-	  <None Update="info.json" CopyToOutputDirectory="PreserveNewest" />
+		<GlobalAnalyzerConfigFiles Include="$(SolutionDir)\@Shared\.globalconfiguration" Link=".globalconfiguration" />
+		<None Update="changelog.md" CopyToOutputDirectory="PreserveNewest" />
+		<None Update="info.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 	<!-- Publicize -->
 	<Target Name="Publicize" BeforeTargets="PreBuildEvent" AfterTargets="">
 		<ItemGroup>
-			<PublicizeInput Include="$(WrathManaged)\Assembly-CSharp.dll" />
-			<PublicizeInput Include="$(WrathManaged)\UnityModManager\0Harmony.dll" />
-			<PublicizeInput Include="$(WrathManaged)\Owlcat.Runtime.UI.dll" />
+			<PublicizeInput Include="$(GameManaged)\Assembly-CSharp.dll" />
+			<PublicizeInput Include="$(GameManaged)\UnityModManager\0Harmony.dll" />
+			<PublicizeInput Include="$(GameManaged)\Owlcat.Runtime.UI.dll" />
 		</ItemGroup>
-		<PublicizeTask InputAssemblies="@(PublicizeInput)" OutputDir="$(WrathManaged)\" />
+		<PublicizeTask InputAssemblies="@(PublicizeInput)" OutputDir="$(GameManaged)\" />
 	</Target>
 
 	<!-- Update build version -->
@@ -96,13 +98,12 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
 			<_CopyItems Include="$(TargetDir)\*" />
+			<_CopyItems Include="$(SolutionDir)\@CodexLib\CodexLib.dll" />
 		</ItemGroup>
 
-		<Copy SourceFiles="$(SolutionDir)..\DarkCodex\CodexLib\bin\$(Configuration)\net472\CodexLib.dll" DestinationFolder="$(ModFolder)\$(TargetName)\" />
 		<Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(ModFolder)\$(TargetName)\%(RecursiveDir)" />
-
 		<Exec Condition="'$(Configuration)'=='Release'" WorkingDirectory="$(ModFolder)\" Command="&quot;C:\Program Files\7-Zip\7z.exe&quot; u &quot;-x!*.zip&quot; &quot;$(TargetName)\$(TargetName).zip&quot; @&quot;$(TargetName)\filelist.txt&quot; &gt;NUL" />
-		<Message Condition="'$(Configuration)'=='Release'" Text="Updated $(TargetName).zip" Importance="High" />		
+		<Message Condition="'$(Configuration)'=='Release'" Text="Updated $(TargetName).zip" Importance="High" />
 	</Target>
 
 </Project>
