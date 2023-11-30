@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<Version>1.2.0</Version>
 		<TargetFramework>net472</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>disable</ImplicitUsings>
@@ -21,7 +22,7 @@
 	<!-- Nuget Packages -->
 	<ItemGroup>
 		<PackageReference Include="AssemblyPublicizer" Version="1.0.2" ExcludeAssets="runtime" />
-		<PackageReference Include="BuildTaskVersionControl" Version="1.0.4" ExcludeAssets="runtime" />
+		<PackageReference Include="BuildTaskVersionControl" Version="1.2.1" ExcludeAssets="runtime" />
 	</ItemGroup>
 
 	<!-- Common References -->
@@ -74,7 +75,7 @@
 	</ItemGroup>
 
 	<!-- Publicize -->
-	<Target Name="Publicize" BeforeTargets="PreBuildEvent" AfterTargets="">
+	<Target Name="Publicize" BeforeTargets="Clean;BeforeBuild" AfterTargets="">
 		<ItemGroup>
 			<PublicizeInput Include="$(GameManaged)\Assembly-CSharp.dll" />
 			<PublicizeInput Include="$(GameManaged)\UnityModManager\0Harmony.dll" />
@@ -84,14 +85,15 @@
 	</Target>
 
 	<!-- Update build version -->
-	<Target Name="Versioning" BeforeTargets="PreBuildEvent">
+	<Target Name="Versioning" BeforeTargets="BeforeBuild">
 		<ItemGroup>
-			<VersioningInput Include="changelog.md" />
-			<VersioningOutput Include="Properties\AssemblyInfo.cs" />
-			<VersioningOutput Include="info.json" />
-			<VersioningOutput Include="Settings\Repository.json" />
+			<_VersioningIn Include="$(MSBuildThisFileFullPath)" />
+			<_VersioningIn Include="changelog.md" />
+			<_VersioningOut Include="$(MSBuildThisFileFullPath)" />
+			<_VersioningOut Include="info.json" />
+			<_VersioningOut Include="Settings\Repository.json" Max="2" />
 		</ItemGroup>
-		<VersioningTask InputFile="@(VersioningInput)" UpdateFiles="@(VersioningOutput)" RegexInput="\[(?'version'[\d\.]{5,})\]" RegexOutput="(?&lt;!Manager)((?:Version|v).*?)(?'version'[\d\.\*]{5,})" MaxMatch="3" TouchFiles="false" />
+		<VersioningTask InputFiles="@(_VersioningIn)" UpdateFiles="@(_VersioningOut)" MaxMatch="1" TouchFiles="false" />
 	</Target>
 
 	<!-- Copy to mod folder -->
@@ -99,10 +101,16 @@
 		<ItemGroup>
 			<_CopyItems Include="$(TargetDir)\*" />
 			<_CopyItems Include="$(SolutionDir)\@CodexLib\CodexLib.dll" />
+
+			<_Zip Include="$(ModFolder)\$(TargetName)\icons\*.png" />
+			<_Zip Include="$(ModFolder)\$(TargetName)\changelog.md" />
+			<_Zip Include="$(ModFolder)\$(TargetName)\CodexLib.dll" />
+			<_Zip Include="$(ModFolder)\$(TargetName)\info.json" />
+			<_Zip Include="$(ModFolder)\$(TargetName)\SpellPouch.dll" />
 		</ItemGroup>
 
 		<Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(ModFolder)\$(TargetName)\%(RecursiveDir)" />
-		<Exec Condition="'$(Configuration)'=='Release'" WorkingDirectory="$(ModFolder)\" Command="&quot;C:\Program Files\7-Zip\7z.exe&quot; u &quot;-x!*.zip&quot; &quot;$(TargetName)\$(TargetName).zip&quot; @&quot;$(TargetName)\filelist.txt&quot; &gt;NUL" />
+		<ZipTask Condition="'$(Configuration)'=='Release'" ZipFileName="$(ModFolder)\$(TargetName)\$(TargetName).zip" WorkingDirectory="$(ModFolder)" Files="@(_Zip)" />
 		<Message Condition="'$(Configuration)'=='Release'" Text="Updated $(TargetName).zip" Importance="High" />
 	</Target>
 

@@ -226,7 +226,7 @@ namespace SpellPouch
                 {
                     for (int i = 0; i < group.Guids.Count; i++)
                         if (!dic.ContainsKey(i))
-                            dic[i] = new MechanicActionBarSlotPlaceholder(unit, new BlueprintUnitFactReference { deserializedGuid = group.Guids[i] });
+                            dic[i] = new MechanicActionBarSlotPlaceholder(unit, new BlueprintUnitFactReference() { deserializedGuid = group.Guids[i] });
                 }
 
                 // add group to actionbar
@@ -345,7 +345,7 @@ namespace SpellPouch
                     return;
             }
 
-            unit.UISettings.SetSlot(mechanic ?? new MechanicActionBarSlotEmpty { Unit = unit }, index);
+            unit.UISettings.SetSlot(mechanic ?? new MechanicActionBarSlotEmpty() { Unit = unit }, index);
             RootVM.SetMechanicSlots(unit);
         }
 
@@ -471,7 +471,7 @@ namespace SpellPouch
 
                 else if (DefGroup.IsValidSpellGroup(sourceMechanic) && DefGroup.IsValidSpellGroup(targetMechanic)) // add new spell group
                 {
-                    SetSlot(targetSlot, new MechanicActionBarSlotSpellGroup(targetMechanic.Unit, new List<MechanicActionBarSlot> { sourceMechanic, targetMechanic }));
+                    SetSlot(targetSlot, new MechanicActionBarSlotSpellGroup(targetMechanic.Unit, new List<MechanicActionBarSlot>() { sourceMechanic, targetMechanic }));
                 }
             }
             catch (Exception e) { Main.PrintException(e); }

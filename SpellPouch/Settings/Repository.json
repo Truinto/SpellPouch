@@ -2,9 +2,9 @@
   "Releases":
   [
     {
-      "Id": "SpellPouch",
-      "Version": "1.1.4",
-      "DownloadUrl": "https://github.com/Truinto/SpellPouch/releases/download/v1.1.4/SpellPouch.zip"
+        "Id": "SpellPouch",
+        "Version": "1.2.0",
+        "DownloadUrl": "https://github.com/Truinto/SpellPouch/releases/download/1.2.0/SpellPouch.zip"
     }
   ]
 }

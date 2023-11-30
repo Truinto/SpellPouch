@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.2.0]
+- updated for 2.1.4
+
 ## [1.1.4]
 - updated project
 
