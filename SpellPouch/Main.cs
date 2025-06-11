@@ -13,6 +13,7 @@ using SpellPouch;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker;
 using Kingmaker.PubSubSystem;
+using CodexLib;
 
 namespace Shared
 {
@@ -62,6 +63,7 @@ namespace Shared
         {
             using var scope = new CodexLib.Scope(Main.ModPath, Main.logger, Main.harmony, false);
 
+            MasterPatch.Run(typeof(CodexLib.Patches.Patch_ActionBarConvert));
             PatchSafe(typeof(Patch_AbilityGroups));
             SubscribeSafe(typeof(Patch_AbilityGroups));
         }
@@ -102,8 +104,7 @@ namespace Shared
                 OnLoad(modEntry);
                 Enabled = true;
                 return true;
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 logger?.LogException(ex);
                 return false;
@@ -141,8 +142,7 @@ namespace Shared
                         path = cPath;
                         version = cVersion;
                     }
-                }
-                catch (Exception) { }
+                } catch (Exception) { }
             }
 
             if (path != null)
@@ -151,8 +151,7 @@ namespace Shared
                 {
                     Print("Loading CodexLib " + path);
                     AppDomain.CurrentDomain.Load(File.ReadAllBytes(path));
-                }
-                catch (Exception) { }
+                } catch (Exception) { }
             }
         }
 
@@ -183,8 +182,7 @@ namespace Shared
                         return Assembly.LoadFrom(path);
                     }
                 }
-            }
-            catch (Exception ex) { logger?.LogException(ex); }
+            } catch (Exception ex) { logger?.LogException(ex); }
             return null;
         }
 
@@ -198,8 +196,7 @@ namespace Shared
             {
                 try
                 {
-                }
-                catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(StartGameLoader), nameof(StartGameLoader.LoadAllJson))]
@@ -210,8 +207,7 @@ namespace Shared
                 try
                 {
                     OnBlueprintsLoaded();
-                }
-                catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(StartGameLoader), nameof(StartGameLoader.LoadAllJson))]
@@ -233,8 +229,7 @@ namespace Shared
                                 harmony.Patch(patch, finalizer: nullFinalizer);
                         }
                     }
-                }
-                catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
@@ -244,8 +239,7 @@ namespace Shared
                 try
                 {
                     OnMainMenu();
-                }
-                catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { logger?.LogException(ex); }
             }
         }
 
@@ -275,8 +269,7 @@ namespace Shared
                 {
                     PrintDebug(message);
                     action();
-                }
-                catch (Exception e) { PrintException(e); }
+                } catch (Exception e) { PrintException(e); }
             }
 
             _patchLast = null;
@@ -329,8 +322,7 @@ namespace Shared
                     throw new Exception($"GetOriginalMethod returned null {attr.info}");
                 var info = Harmony.GetPatchInfo(orignal);
                 return info != null && (info.Prefixes.Any() || info.Postfixes.Any() || info.Transpilers.Any());
-            }
-            catch (Exception e) { PrintException(e); }
+            } catch (Exception e) { PrintException(e); }
             return true;
         }
 
@@ -358,8 +350,7 @@ namespace Shared
                     var prio = info.Prefixes.Where(w => w.owner == harmony.Id).Select(s => s.priority);
                     list.AddRange(info.Prefixes.Where(w => w.owner != harmony.Id && w.PatchMethod.ReturnType != typeof(void) && prio.Contains(w.priority)));
                 }
-            }
-            catch (Exception e) { PrintException(e); }
+            } catch (Exception e) { PrintException(e); }
 
             return list;
         }
@@ -387,8 +378,7 @@ namespace Shared
                 PrintDebug("Loaded in milliseconds: " + watch.ElapsedMilliseconds);
 #endif
                 return true;
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
 #if DEBUG
                 watch.Stop();
@@ -421,8 +411,7 @@ namespace Shared
                 PrintDebug("Loaded in milliseconds: " + watch.ElapsedMilliseconds);
 #endif
                 return true;
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
 #if DEBUG
                 watch.Stop();
@@ -459,8 +448,7 @@ namespace Shared
             {
                 Patch(patch);
                 return true;
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 PrintException(e);
                 return false;
@@ -480,8 +468,7 @@ namespace Shared
             {
                 Print("Subscribing to " + type.Name);
                 EventBus.Subscribe(Activator.CreateInstance(type));
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 PrintException(e);
             }
@@ -516,8 +503,7 @@ namespace Shared
                             .Where(c => c.IsStatic)
                             .FirstOrDefault();
                 }
-            }
-            catch (AmbiguousMatchException ex)
+            } catch (AmbiguousMatchException ex)
             {
                 throw new Exception("GetOriginalMethod", ex);
             }
@@ -559,8 +545,7 @@ namespace Shared
             try
             {
                 PrintException(__exception);
-            }
-            catch (Exception) { }
+            } catch (Exception) { }
             return null;
 #endif
         }

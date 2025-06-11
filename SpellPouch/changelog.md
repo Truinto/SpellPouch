@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.0]
+- updated for 2.7.0, fix #15
+
 ## [1.2.0]
 - updated for 2.1.4
 

@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellPouch", "SpellPouch\SpellPouch.csproj", "{0CCED1B7-458B-47DE-9902-C9B132C042C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityMod", "@Shared\UnityMod\UnityMod.csproj", "{362F5392-CAD5-5409-3147-A17AA7164558}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodexLib", "..\DarkCodex\CodexLib\CodexLib.csproj", "{499318F5-695B-3FCE-BBE9-F5CBDB558ADA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{0CCED1B7-458B-47DE-9902-C9B132C042C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CCED1B7-458B-47DE-9902-C9B132C042C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CCED1B7-458B-47DE-9902-C9B132C042C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{362F5392-CAD5-5409-3147-A17AA7164558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362F5392-CAD5-5409-3147-A17AA7164558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362F5392-CAD5-5409-3147-A17AA7164558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362F5392-CAD5-5409-3147-A17AA7164558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499318F5-695B-3FCE-BBE9-F5CBDB558ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499318F5-695B-3FCE-BBE9-F5CBDB558ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499318F5-695B-3FCE-BBE9-F5CBDB558ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499318F5-695B-3FCE-BBE9-F5CBDB558ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

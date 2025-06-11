@@ -74,37 +74,15 @@ namespace SpellPouch
         {
             try
             {
-                // MythicSummonResource
-                // BeastCallSummon
-                // Mutagen
-                // ForesterTactician
-                // Judgment
-
-                //CollectFromResource("9d9c90a9a1f52d04799294bf91c80a82", "Ki Powers", "", null);
-                //CollectFromResource("7d002c1025fbfe2458f1509bf7a89ce1", "Ki Powers Scaled Fist", "", null);
-                //CollectFromResource("effc3e386331f864e9e06d19dc218b37", "Arcane Pool", "", null);
-                //CollectFromResource("9dedf41d995ff4446a181f143c3db98c", "Lay On Hands", "", null);
-                //CollectFromResource("905722fe39d87474aa6d41bffa327ff3", "Aeon Gaze", "", null);
-                //CollectFromResource("da0fb35828917f344b1cd72c98b70498", "Warpriest Fervor", "", null);
-                //CollectFromResource("d2bae584db4bf4f4f86dd9d15ae56558", "Stunning Fist", "", null);
-                //CollectFromResource("e190ba276831b5c4fa28737e5e49e6a6", "Bardic Performance", "", null);
-                //CollectFromResource("d67ddd98ad019854d926f3d6a4e681c5", "Arcanist Consume Spells", "", null);
-                //CollectFromResource("cac948cbbe79b55459459dd6a8fe44ce", "Arcanist Arcane Reservoir", "", null);
-                //CollectFromResource("1633025edc9d53f4691481b48248edd7", "Alchemist Bombs", "", null);
-                //Helper.Serialize(DefGroup.Groups, path: Path.Combine(Main.ModPath, "DefGroups.json"));
-                //return;
-
                 DefGroup.Groups = Helper.Deserialize<HashSet<DefGroup>>(path: Path.Combine(Main.ModPath, "DefGroups.json"));
-            }
-            catch (Exception e1)
+            } catch (Exception e1)
             {
                 Main.PrintException(e1);
                 try
                 {
                     DefGroup.Groups = Helper.Deserialize<HashSet<DefGroup>>(value: DefaultDef);
                     Save();
-                }
-                catch (Exception e2)
+                } catch (Exception e2)
                 {
                     Main.PrintException(e2);
                     DefGroup.Groups = new();
@@ -173,23 +151,13 @@ namespace SpellPouch
             try
             {
                 Helper.Serialize(DefGroup.Groups, path: Path.Combine(Main.ModPath, "DefGroups.json"));
-            }
-            catch (Exception e) { Main.PrintException(e); }
+            } catch (Exception e) { Main.PrintException(e); }
         }
 
         public static void ToggleLocked()
         {
             DefGroup.Unlocked = !DefGroup.Unlocked;
             DefGroup.RefreshUI();
-        }
-
-        [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.SetMechanicSlot))]
-        [HarmonyPostfix]
-        private static void ShowButton(ActionBarSlotVM __instance)
-        {
-            // makes the unfold button visible
-            if (__instance?.MechanicActionBarSlot is IMechanicGroup)
-                __instance.HasConvert.Value = true;
         }
 
         [HarmonyPatch(typeof(ActionBarVM), nameof(ActionBarVM.CollectAbilities))]
@@ -245,30 +213,6 @@ namespace SpellPouch
             }
         }
 
-        [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.OnShowConvertRequest))]
-        [HarmonyPriority(Priority.First)]
-        [HarmonyPrefix]
-        private static bool OnShowConvert(ActionBarSlotVM __instance)
-        {
-            if (__instance.MechanicActionBarSlot is not IMechanicGroup group)
-                return true;
-
-            if (__instance.ConvertedVm.Value != null && !__instance.ConvertedVm.Value.IsDisposed)
-            {
-                __instance.CloseConvert();
-                return false;
-            }
-
-            for (int i = group.Slots.Count - 1; i >= 0; i--)
-            {
-                if (group.Slots[i].IsBad())
-                    group.Slots.RemoveAt(i);
-            }
-
-            __instance.ConvertedVm.Value = new ActionBarConvertedVMAny(__instance, group.Slots, __instance.CloseConvert); // if null is used, it won't close; possible useful for nesting
-            return false;
-        }
-
         [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.OnMainClick))]
         [HarmonyPostfix]
         private static void OnClick(ActionBarSlotVM __instance)
@@ -292,8 +236,7 @@ namespace SpellPouch
                         break;
                     }
                 }
-            }
-            catch (Exception e) { Main.PrintException(e); }
+            } catch (Exception e) { Main.PrintException(e); }
         }
 
         [HarmonyPatch(typeof(ActionBarVM), nameof(ActionBarVM.OnUnitChanged))]
@@ -314,8 +257,7 @@ namespace SpellPouch
                         break;
                     }
                 }
-            }
-            catch (Exception e) { Main.PrintException(e); }
+            } catch (Exception e) { Main.PrintException(e); }
         }
 
         private static void SwapSlot(ActionBarSlotVM slot1, ActionBarSlotVM slot2)
@@ -473,34 +415,8 @@ namespace SpellPouch
                 {
                     SetSlot(targetSlot, new MechanicActionBarSlotSpellGroup(targetMechanic.Unit, new List<MechanicActionBarSlot>() { sourceMechanic, targetMechanic }));
                 }
-            }
-            catch (Exception e) { Main.PrintException(e); }
+            } catch (Exception e) { Main.PrintException(e); }
             return false;
-        }
-
-        [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.UpdateResource))]
-        [HarmonyPostfix]
-        private static void UpdateSlot(ActionBarSlotVM __instance)
-        {
-            if (__instance.MechanicActionBarSlot is IMechanicGroup)
-                __instance.Icon.Value = __instance.MechanicActionBarSlot.GetIcon();
-        }
-
-        [HarmonyPatch(typeof(ActionBarSlotVM), nameof(ActionBarSlotVM.UpdateResource))]
-        [HarmonyFinalizer]
-        private static Exception UpdateSlotFinalizer(Exception __exception) => Main.NullFinalizer(__exception);
-
-        [HarmonyPatch(typeof(UnitUISettings), nameof(UnitUISettings.GetBadSlotReplacement))]
-        [HarmonyPrefix]
-        private static bool BadReplacement(MechanicActionBarSlot slot, ref MechanicActionBarSlot __result)
-        {
-            if (slot is MechanicActionBarSlotGroup || slot is MechanicActionBarSlotSpellGroup || slot is MechanicActionBarSlotPlaceholder)
-            {
-                __result = null;
-                Main.PrintDebug($"BadReplacement {slot} to null");
-                return false;
-            }
-            return true;
         }
 
         #region Events
@@ -521,8 +437,7 @@ namespace SpellPouch
                         }
                     }
                 }
-            }
-            catch (Exception e) { Main.PrintException(e); }
+            } catch (Exception e) { Main.PrintException(e); }
         }
 
         #endregion
