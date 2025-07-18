@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>1.3.0</Version>
+		<Version>1.3.1</Version>
 		<TargetFramework>net48</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>disable</ImplicitUsings>
@@ -91,7 +91,7 @@
 		</ItemGroup>
 
 		<Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(ModFolder)\$(TargetName)\%(RecursiveDir)" />
-		<ZipTask Condition="'$(Configuration)'=='Release'" ZipFileName="$(ModFolder)\$(TargetName)\$(TargetName).zip" WorkingDirectory="$(ModFolder)" Files="@(_Zip)" />
+		<ZipTask Condition="'$(Configuration)'=='Release'" ZipFileName="$(SolutionDir)\publish\$(TargetName).zip" WorkingDirectory="$(ModFolder)" Files="@(_Zip)" />
 		<Message Condition="'$(Configuration)'=='Release'" Text="Updated $(TargetName).zip" Importance="High" />
 	</Target>
 

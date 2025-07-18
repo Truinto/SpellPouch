@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.1]
+- updated references (Harmony v2.3.6)
+
 ## [1.3.0]
 - updated for 2.7.0, fix #15
 
