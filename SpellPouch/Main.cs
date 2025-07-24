@@ -330,27 +330,27 @@ namespace Shared
         {
             var list = new List<Patch>();
 
-            try
-            {
-                foreach (var patch in processor.patchMethods)
-                {
-                    var orignal = patch.info.GetOriginalMethod();
-                    if (orignal == null)
-                        throw new Exception($"GetOriginalMethod returned null {patch.info}");
+            //try
+            //{
+            //    foreach (var patch in processor.patchMethods)
+            //    {
+            //        var orignal = patch.info.GetOriginalMethod();
+            //        if (orignal == null)
+            //            throw new Exception($"GetOriginalMethod returned null {patch.info}");
 
-                    // if unpatched, no conflict
-                    var info = Harmony.GetPatchInfo(orignal);
-                    if (info == null)
-                        continue;
+            //        // if unpatched, no conflict
+            //        var info = Harmony.GetPatchInfo(orignal);
+            //        if (info == null)
+            //            continue;
 
-                    // if foreign transpilers, warn conflict
-                    list.AddRange(info.Transpilers.Where(a => a.owner != harmony.Id));
+            //        // if foreign transpilers, warn conflict
+            //        list.AddRange(info.Transpilers.Where(a => a.owner != harmony.Id));
 
-                    // if foreign prefixes with return type and identical priority as own prefix, warn conflict
-                    var prio = info.Prefixes.Where(w => w.owner == harmony.Id).Select(s => s.priority);
-                    list.AddRange(info.Prefixes.Where(w => w.owner != harmony.Id && w.PatchMethod.ReturnType != typeof(void) && prio.Contains(w.priority)));
-                }
-            } catch (Exception e) { PrintException(e); }
+            //        // if foreign prefixes with return type and identical priority as own prefix, warn conflict
+            //        var prio = info.Prefixes.Where(w => w.owner == harmony.Id).Select(s => s.priority);
+            //        list.AddRange(info.Prefixes.Where(w => w.owner != harmony.Id && w.PatchMethod.ReturnType != typeof(void) && prio.Contains(w.priority)));
+            //    }
+            //} catch (Exception e) { PrintException(e); }
 
             return list;
         }
