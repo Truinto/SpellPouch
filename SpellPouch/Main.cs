@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,28 +15,28 @@ using Kingmaker;
 using Kingmaker.PubSubSystem;
 using CodexLib;
 
-namespace Shared
+namespace SpellPouch
 {
     public static partial class Main
     {
-        public static Harmony harmony;
+        public static Harmony HarmonyInstance = null!;
         public static bool Enabled;
-        public static string ModPath;
-        internal static PatchInfoCollection patchInfos;
-        internal static readonly List<string> appliedPatches = new();
-        private static UnityModManager.ModEntry.ModLogger logger;
-        private static bool applyNullFinalizer;
+        public static string ModPath = null!;
+        internal static PatchInfoCollection? _PatchInfos;
+        internal static readonly List<string> _AppliedPatches = new();
+        private static UnityModManager.ModEntry.ModLogger _Logger = null!;
+        private static bool _ApplyNullFinalizer;
 
-        private static GUIStyle StyleBox;
-        private static GUIStyle StyleLine;
+        private static GUIStyle? _StyleBox;
+        private static GUIStyle? _StyleLine;
 
         public static void OnGUI(UnityModManager.ModEntry modEntry)
         {
-            if (StyleBox == null)
+            if (_StyleBox == null)
             {
-                StyleBox = new GUIStyle(GUI.skin.box) { alignment = TextAnchor.MiddleCenter };
-                StyleLine = new GUIStyle() { fixedHeight = 1, margin = new RectOffset(0, 0, 4, 4), };
-                StyleLine.normal.background = new Texture2D(1, 1);
+                _StyleBox = new GUIStyle(GUI.skin.box) { alignment = TextAnchor.MiddleCenter };
+                _StyleLine = new GUIStyle() { fixedHeight = 1, margin = new RectOffset(0, 0, 4, 4), };
+                _StyleLine.normal.background = new Texture2D(1, 1);
             }
 
             if (GUILayout.Button("Reload Ability Groups 'DefGroups.json'", GUILayout.ExpandWidth(false)))
@@ -61,9 +61,11 @@ namespace Shared
 
         public static void OnBlueprintsLoaded()
         {
-            using var scope = new CodexLib.Scope(Main.ModPath, Main.logger, Main.harmony, false);
-
+            using var scope = new CodexLib.Scope(Main.ModPath, Main._Logger, Main.HarmonyInstance, false);
             MasterPatch.Run(typeof(CodexLib.Patches.Patch_ActionBarConvert));
+            Print("Loading Spell Pouch");
+            _PatchInfos = new(Settings.State);
+
             PatchSafe(typeof(Patch_AbilityGroups));
             SubscribeSafe(typeof(Patch_AbilityGroups));
         }
@@ -93,27 +95,27 @@ namespace Shared
             /// <param name="modEntry.OnFixedUpdate">Called by MonoBehaviour.FixedUpdate.</param>
             /// <returns>Returns true, if no error occurred.</returns>
             ModPath = modEntry.Path;
-            logger = modEntry.Logger;
+            _Logger = modEntry.Logger;
             modEntry.OnUnload = Unload;
 
             try
             {
                 EnsureCodexLib(modEntry.Path);
-                harmony = new Harmony(modEntry.Info.Id);
+                HarmonyInstance = new Harmony(modEntry.Info.Id);
                 Patch(typeof(Patches));
                 OnLoad(modEntry);
                 Enabled = true;
                 return true;
             } catch (Exception ex)
             {
-                logger?.LogException(ex);
+                _Logger?.LogException(ex);
                 return false;
             }
         }
 
         public static bool Unload(UnityModManager.ModEntry modEntry)
         {
-            harmony?.UnpatchAll(modEntry.Info.Id);
+            HarmonyInstance?.UnpatchAll(modEntry.Info.Id);
             Enabled = false;
             return true;
         }
@@ -126,8 +128,8 @@ namespace Shared
                 return;
             }
 
-            string path = null;
-            Version version = null;
+            string? path = null;
+            Version? version = null;
             modPath = new DirectoryInfo(modPath).Parent.FullName;
             PrintDebug("Looking for CodexLib in " + modPath);
 
@@ -142,7 +144,8 @@ namespace Shared
                         path = cPath;
                         version = cVersion;
                     }
-                } catch (Exception) { }
+                }
+                catch (Exception) { }
             }
 
             if (path != null)
@@ -151,11 +154,12 @@ namespace Shared
                 {
                     Print("Loading CodexLib " + path);
                     AppDomain.CurrentDomain.Load(File.ReadAllBytes(path));
-                } catch (Exception) { }
+                }
+                catch (Exception) { }
             }
         }
 
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private static Assembly? CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             try
             {
@@ -163,8 +167,8 @@ namespace Shared
 
                 if (ModPath != null && args.Name.StartsWith("CodexLib, "))
                 {
-                    string path = null;
-                    Version version = null;
+                    string? path = null;
+                    Version? version = null;
 
                     foreach (string cPath in Directory.GetFiles(Directory.GetParent(ModPath).FullName, "CodexLib.dll"))
                     {
@@ -182,7 +186,8 @@ namespace Shared
                         return Assembly.LoadFrom(path);
                     }
                 }
-            } catch (Exception ex) { logger?.LogException(ex); }
+            }
+            catch (Exception ex) { _Logger?.LogException(ex); }
             return null;
         }
 
@@ -196,7 +201,7 @@ namespace Shared
             {
                 try
                 {
-                } catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { _Logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(StartGameLoader), nameof(StartGameLoader.LoadAllJson))]
@@ -207,7 +212,7 @@ namespace Shared
                 try
                 {
                     OnBlueprintsLoaded();
-                } catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { _Logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(StartGameLoader), nameof(StartGameLoader.LoadAllJson))]
@@ -220,16 +225,16 @@ namespace Shared
                     OnBlueprintsLoadedLast();
                     RunLastNow();
 
-                    if (applyNullFinalizer)
+                    if (_ApplyNullFinalizer)
                     {
                         var nullFinalizer = new HarmonyMethod(AccessTools.Method(typeof(Main), nameof(Main.NullFinalizer)));
-                        foreach (var patch in harmony.GetPatchedMethods().ToArray())
+                        foreach (var patch in HarmonyInstance.GetPatchedMethods().ToArray())
                         {
                             if (Harmony.GetPatchInfo(patch).Finalizers.Count == 0)
-                                harmony.Patch(patch, finalizer: nullFinalizer);
+                                HarmonyInstance.Patch(patch, finalizer: nullFinalizer);
                         }
                     }
-                } catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { _Logger?.LogException(ex); }
             }
 
             [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
@@ -239,7 +244,7 @@ namespace Shared
                 try
                 {
                     OnMainMenu();
-                } catch (Exception ex) { logger?.LogException(ex); }
+                } catch (Exception ex) { _Logger?.LogException(ex); }
             }
         }
 
@@ -247,23 +252,23 @@ namespace Shared
 
         #region Helper
 
-        private static List<(string, Action)> _patchLast = new();
+        private static List<(string, Action)>? _PatchLast = new();
         internal static void RunLast(string message, Action action)
         {
-            if (_patchLast == null)
+            if (_PatchLast == null)
                 action();
             else
-                _patchLast.Add((message, action));
+                _PatchLast.Add((message, action));
         }
         private static void RunLastNow()
         {
-            if (_patchLast == null)
+            if (_PatchLast == null)
                 return;
 
-            if (_patchLast.Count > 0)
+            if (_PatchLast.Count > 0)
                 PrintDebug("Running _patchLast");
 
-            foreach (var (message, action) in _patchLast)
+            foreach (var (message, action) in _PatchLast)
             {
                 try
                 {
@@ -272,33 +277,33 @@ namespace Shared
                 } catch (Exception e) { PrintException(e); }
             }
 
-            _patchLast = null;
+            _PatchLast = null;
         }
 
-        internal static void Print(string msg) => logger?.Log(msg);
+        internal static void Print(string msg) => _Logger?.Log(msg);
 
         [System.Diagnostics.Conditional("DEBUG")]
-        internal static void PrintDebug(string msg) => logger?.Log(msg);
+        internal static void PrintDebug(string msg) => _Logger?.Log(msg);
 
-        private static int _exceptionCount;
+        private static int _ExceptionCount;
         internal static void PrintException(Exception ex)
         {
-            if (_exceptionCount > 1000)
+            if (_ExceptionCount > 1000)
                 return;
 
-            logger?.LogException(ex);
+            _Logger?.LogException(ex);
 
-            _exceptionCount++;
-            if (_exceptionCount > 1000)
-                logger?.Log("-- too many exceptions, future exceptions are suppressed");
+            _ExceptionCount++;
+            if (_ExceptionCount > 1000)
+                _Logger?.Log("-- too many exceptions, future exceptions are suppressed");
         }
 
-        internal static void PrintError(string msg) => logger?.Log("[Error/Exception] " + msg);
+        internal static void PrintError(string msg) => _Logger?.Log("[Error/Exception] " + msg);
 
         internal static void Patch(Type patch)
         {
             Print("Patching " + patch.Name);
-            var processor = harmony.CreateClassProcessor(patch);
+            var processor = HarmonyInstance.CreateClassProcessor(patch);
             processor.Patch();
 #if DEBUG
             var patches = GetConflictPatches(processor);
@@ -317,9 +322,7 @@ namespace Shared
                 if (patch.GetCustomAttributes(false).FirstOrDefault(f => f is HarmonyPatch) is not HarmonyPatch attr)
                     throw new ArgumentException("Type must have HarmonyPatch attribute");
 
-                MethodBase orignal = attr.info.GetOriginalMethod();
-                if (orignal == null)
-                    throw new Exception($"GetOriginalMethod returned null {attr.info}");
+                var orignal = attr.info.GetOriginalMethod() ?? throw new Exception($"GetOriginalMethod returned null {attr.info}");
                 var info = Harmony.GetPatchInfo(orignal);
                 return info != null && (info.Prefixes.Any() || info.Postfixes.Any() || info.Transpilers.Any());
             } catch (Exception e) { PrintException(e); }
@@ -474,7 +477,7 @@ namespace Shared
             }
         }
 
-        internal static MethodBase GetOriginalMethod(this HarmonyMethod attr)
+        internal static MethodBase? GetOriginalMethod(this HarmonyMethod attr)
         {
             try
             {
@@ -513,10 +516,10 @@ namespace Shared
 
         private static bool CheckSetting(string name)
         {
-            bool skip = patchInfos?.IsDisenabled(name) ?? false;
+            bool skip = _PatchInfos?.IsDisenabled(name) ?? false;
 
-            if (!skip && !appliedPatches.Contains(name))
-                appliedPatches.Add(name);
+            if (!skip && !_AppliedPatches.Contains(name))
+                _AppliedPatches.Add(name);
 
             return skip;
         }
@@ -532,10 +535,10 @@ namespace Shared
                 return;
             }
 
-            patchInfos?.Add(attr, info);
+            _PatchInfos?.Add(attr, info);
         }
 
-        internal static Exception NullFinalizer(Exception __exception)
+        internal static Exception? NullFinalizer(Exception? __exception)
         {
 #if !DEBUG
             return null;
@@ -554,10 +557,10 @@ namespace Shared
 
         #region GUI
 
-        private static void Checkbox(ref bool value, string label, Action<bool> action = null)
+        private static void Checkbox(ref bool value, string label, Action<bool>? action = null)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(value ? "<color=green><b>✔</b></color>" : "<color=red><b>✖</b></color>", StyleBox, GUILayout.Width(20)))
+            if (GUILayout.Button(value ? "<color=green><b>✔</b></color>" : "<color=red><b>✖</b></color>", _StyleBox, GUILayout.Width(20)))
             {
                 value = !value;
                 action?.Invoke(value);
@@ -570,7 +573,7 @@ namespace Shared
         private static void Checkbox(bool value, string label, Action<bool> action)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(value ? "<color=green><b>✔</b></color>" : "<color=red><b>✖</b></color>", StyleBox, GUILayout.Width(20)))
+            if (GUILayout.Button(value ? "<color=green><b>✔</b></color>" : "<color=red><b>✖</b></color>", _StyleBox, GUILayout.Width(20)))
             {
                 action.Invoke(!value);
             }

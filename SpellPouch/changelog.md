@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.3]
+- updated to current CodexLib
+
 ## [1.3.2]
 - downgraded Harmony reference to 2.0.4 to fix issues with InterpolatedStringHandler
 

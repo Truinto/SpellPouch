@@ -1,19 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>1.3.2</Version>
+		<Version>1.3.3</Version>
 		<TargetFramework>net48</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>disable</Nullable>
 		<Authors>Truinto</Authors>
 		<Title>$(MSBuildProjectName)</Title>
 		<RepositoryUrl>https://github.com/Truinto/SpellPouch</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<DebugType>embedded</DebugType>
-		<DebugSymbols>true</DebugSymbols>
 	</PropertyGroup>
 
 	<!-- Common References -->
@@ -31,36 +27,40 @@
 	<!-- Project References -->
 	<ItemGroup>
 		<PackageReference PrivateAssets="all" Include="Lib.Harmony" Version="2.0.4" />
-		<Reference Private="false" Include="Assembly-CSharp" HintPath="$(GameManaged)\Assembly-CSharp.dll" Publicize="true" />
-		<Reference Private="false" Include="Owlcat.Runtime.UI" HintPath="$(GameManaged)\Owlcat.Runtime.UI.dll" Publicize="true" />
+        <PackageReference PrivateAssets="all" Include="Nullable" Version="1.3.1" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+		<Reference Private="false" Include="Assembly-CSharp" HintPath="$(GameManaged)/Assembly-CSharp.dll" Publicize="true" />
+		<Reference Private="false" Include="Owlcat.Runtime.UI" HintPath="$(GameManaged)/Owlcat.Runtime.UI.dll" Publicize="true" />
 
-		<Reference Private="false" Include="UnityModManager" HintPath="$(GameManaged)\UnityModManager\UnityModManager.dll" />
-		<Reference Private="false" Include="Assembly-CSharp-firstpass" HintPath="$(GameManaged)\Assembly-CSharp-firstpass.dll" />
-		<Reference Private="false" Include="Newtonsoft.Json" HintPath="$(GameManaged)\Newtonsoft.Json.dll" />
-		<Reference Private="false" Include="UniRx" HintPath="$(GameManaged)\UniRx.dll" />
-		<Reference Private="false" Include="DotNetZip" HintPath="$(GameManaged)\DotNetZip.dll" />
-		<Reference Private="false" Include="Owlcat.SharedTypes" HintPath="$(GameManaged)\Owlcat.SharedTypes.dll" />
-		<Reference Private="false" Include="Owlcat.Runtime.Core" HintPath="$(GameManaged)\Owlcat.Runtime.Core.dll" />
-		<Reference Private="false" Include="Owlcat.Runtime.Validation" HintPath="$(GameManaged)\Owlcat.Runtime.Validation.dll" />
-		<Reference Private="false" Include="UnityEngine" HintPath="$(GameManaged)\UnityEngine.dll" />
-		<Reference Private="false" Include="UnityTextMeshPro" HintPath="$(GameManaged)\Unity.TextMeshPro.dll" />
-		<Reference Private="false" Include="UnityEngine.UI" HintPath="$(GameManaged)\UnityEngine.UI.dll" />
-		<Reference Private="false" Include="UnityEngine.AnimationModule" HintPath="$(GameManaged)\UnityEngine.AnimationModule.dll" />
-		<Reference Private="false" Include="UnityEngine.CoreModule" HintPath="$(GameManaged)\UnityEngine.CoreModule.dll" />
-		<Reference Private="false" Include="UnityEngine.ImageConversionModule" HintPath="$(GameManaged)\UnityEngine.ImageConversionModule.dll" />
-		<Reference Private="false" Include="UnityEngine.IMGUIModule" HintPath="$(GameManaged)\UnityEngine.IMGUIModule.dll" />
-		<Reference Private="false" Include="UnityEngine.JSONSerializeModule" HintPath="$(GameManaged)\UnityEngine.JSONSerializeModule.dll" />
-		<Reference Private="false" Include="UnityEngine.ParticleSystemModule" HintPath="$(GameManaged)\UnityEngine.ParticleSystemModule.dll" />
-		<Reference Private="false" Include="UnityEngine.TextRenderingModule" HintPath="$(GameManaged)\UnityEngine.TextRenderingModule.dll" />
-		<Reference Private="false" Include="UnityEngine.InputLegacyModule" HintPath="$(GameManaged)\UnityEngine.InputLegacyModule.dll" />
-		<Reference Private="false" Include="UnityEngine.UIModule" HintPath="$(GameManaged)\UnityEngine.UIModule.dll" />
+		<Reference Private="false" Include="UnityModManager" HintPath="$(GameManaged)/UnityModManager/UnityModManager.dll" />
+		<Reference Private="false" Include="Assembly-CSharp-firstpass" HintPath="$(GameManaged)/Assembly-CSharp-firstpass.dll" />
+		<Reference Private="false" Include="Newtonsoft.Json" HintPath="$(GameManaged)/Newtonsoft.Json.dll" />
+		<Reference Private="false" Include="UniRx" HintPath="$(GameManaged)/UniRx.dll" />
+		<Reference Private="false" Include="DotNetZip" HintPath="$(GameManaged)/DotNetZip.dll" />
+		<Reference Private="false" Include="Owlcat.SharedTypes" HintPath="$(GameManaged)/Owlcat.SharedTypes.dll" />
+		<Reference Private="false" Include="Owlcat.Runtime.Core" HintPath="$(GameManaged)/Owlcat.Runtime.Core.dll" />
+		<Reference Private="false" Include="Owlcat.Runtime.Validation" HintPath="$(GameManaged)/Owlcat.Runtime.Validation.dll" />
+		<Reference Private="false" Include="UnityEngine" HintPath="$(GameManaged)/UnityEngine.dll" />
+		<Reference Private="false" Include="UnityTextMeshPro" HintPath="$(GameManaged)/Unity.TextMeshPro.dll" />
+		<Reference Private="false" Include="UnityEngine.UI" HintPath="$(GameManaged)/UnityEngine.UI.dll" />
+		<Reference Private="false" Include="UnityEngine.AnimationModule" HintPath="$(GameManaged)/UnityEngine.AnimationModule.dll" />
+		<Reference Private="false" Include="UnityEngine.CoreModule" HintPath="$(GameManaged)/UnityEngine.CoreModule.dll" />
+		<Reference Private="false" Include="UnityEngine.ImageConversionModule" HintPath="$(GameManaged)/UnityEngine.ImageConversionModule.dll" />
+		<Reference Private="false" Include="UnityEngine.IMGUIModule" HintPath="$(GameManaged)/UnityEngine.IMGUIModule.dll" />
+		<Reference Private="false" Include="UnityEngine.JSONSerializeModule" HintPath="$(GameManaged)/UnityEngine.JSONSerializeModule.dll" />
+		<Reference Private="false" Include="UnityEngine.ParticleSystemModule" HintPath="$(GameManaged)/UnityEngine.ParticleSystemModule.dll" />
+		<Reference Private="false" Include="UnityEngine.TextRenderingModule" HintPath="$(GameManaged)/UnityEngine.TextRenderingModule.dll" />
+		<Reference Private="false" Include="UnityEngine.InputLegacyModule" HintPath="$(GameManaged)/UnityEngine.InputLegacyModule.dll" />
+		<Reference Private="false" Include="UnityEngine.UIModule" HintPath="$(GameManaged)/UnityEngine.UIModule.dll" />
 
-		<Reference Private="false" Include="CodexLib" HintPath="$(SolutionDir)\@CodexLib\CodexLib.dll" />
+        <Reference Private="false" Include="CodexLib" HintPath="$(SolutionDir)/@CodexLib/CodexLib.dll" />
+
+        <Compile Include="$(SharedDir)/General/JsonNewtonsoft.cs" Link="Shared/JsonNewtonsoft.cs" />
+        <Compile Include="$(SharedDir)/General/BaseSettings.cs" Link="Shared/BaseSettings.cs" />
 	</ItemGroup>
 
 	<!-- Other Files -->
 	<ItemGroup>
-		<GlobalAnalyzerConfigFiles Include="$(SolutionDir)\@Shared\.globalconfiguration" Link=".globalconfiguration" />
+		<GlobalAnalyzerConfigFiles Include="$(SolutionDir)/@Shared/.globalconfiguration" Link=".globalconfiguration" />
 		<None Update="changelog.md" CopyToOutputDirectory="PreserveNewest" />
 		<None Update="info.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
@@ -72,7 +72,7 @@
 			<_VersioningIn Include="changelog.md" />
 			<_VersioningOut Include="$(MSBuildThisFileFullPath)" />
 			<_VersioningOut Include="info.json" />
-			<_VersioningOut Include="Settings\Repository.json" Max="2" />
+			<_VersioningOut Include="Settings/Repository.json" Max="2" />
 		</ItemGroup>
 		<VersioningTask InputFiles="@(_VersioningIn)" UpdateFiles="@(_VersioningOut)" MaxMatch="1" TouchFiles="false" />
 	</Target>
@@ -80,18 +80,18 @@
 	<!-- Copy to mod folder -->
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<_CopyItems Include="$(TargetDir)\*" />
-			<_CopyItems Include="$(SolutionDir)\@CodexLib\CodexLib.dll" />
+			<_CopyItems Include="$(TargetDir)/*" />
+			<_CopyItems Include="$(SolutionDir)/@CodexLib/CodexLib.dll" />
 
-			<_Zip Include="$(ModFolder)\$(TargetName)\icons\*.png" />
-			<_Zip Include="$(ModFolder)\$(TargetName)\changelog.md" />
-			<_Zip Include="$(ModFolder)\$(TargetName)\CodexLib.dll" />
-			<_Zip Include="$(ModFolder)\$(TargetName)\info.json" />
-			<_Zip Include="$(ModFolder)\$(TargetName)\SpellPouch.dll" />
+			<_Zip Include="$(ModFolder)/$(TargetName)/icons/*.png" />
+			<_Zip Include="$(ModFolder)/$(TargetName)/changelog.md" />
+			<_Zip Include="$(ModFolder)/$(TargetName)/CodexLib.dll" />
+			<_Zip Include="$(ModFolder)/$(TargetName)/info.json" />
+			<_Zip Include="$(ModFolder)/$(TargetName)/SpellPouch.dll" />
 		</ItemGroup>
 
-		<Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(ModFolder)\$(TargetName)\%(RecursiveDir)" />
-		<ZipTask Condition="'$(Configuration)'=='Release'" ZipFileName="$(SolutionDir)\publish\$(TargetName).zip" WorkingDirectory="$(ModFolder)" Files="@(_Zip)" />
+		<Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(ModFolder)/$(TargetName)/%(RecursiveDir)" />
+		<ZipTask Condition="'$(Configuration)'=='Release'" ZipFileName="$(SolutionDir)/publish/$(TargetName).zip" WorkingDirectory="$(ModFolder)" Files="@(_Zip)" />
 		<Message Condition="'$(Configuration)'=='Release'" Text="Updated $(TargetName).zip" Importance="High" />
 	</Target>
 
